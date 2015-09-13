@@ -30,4 +30,7 @@ class TwoDoTask(object):
 
         :type task_title: basestring
         """
-        self.task_title = task_title
+        self.task = task_title
+
+
+
