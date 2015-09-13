@@ -31,6 +31,3 @@ class TwoDoTask(object):
         :type task_title: basestring
         """
         self.task = task_title
-
-
-
