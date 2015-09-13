@@ -1,4 +1,5 @@
 import unittest
+import urllib
 
 import twodolib
 
@@ -25,3 +26,14 @@ class TestShowUrls(unittest.TestCase):
         """Check, that showscheduled url is correct."""
         expected_url = 'twodo://x-callback-url/showScheduled'
         self.assertEqual(twodolib.showscheduled_url, expected_url)
+
+
+class TestGetSimpleAddUrl(unittest.TestCase):
+    """Test url for adding tasks to 2Do App."""
+
+    def test_add_task_with_title_url(self):
+        """Test adding a task only with a title."""
+        task_title = 'Test title of the task.'
+        quoted_title = urllib.quote(task_title)
+        expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
+        self.assertEqual(twodolib.get_add_url(task_title), expected_url)
