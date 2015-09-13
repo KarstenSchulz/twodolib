@@ -43,7 +43,8 @@ class TestGetSimpleAddUrl(unittest.TestCase):
         self.assertEqual(twodolib.get_add_url(task_title), expected_url)
 
 
-class TestTwoDoTaskCLass(unittest.TestCase):
+@unittest.skip
+class TestTwoDoTaskClass(unittest.TestCase):
 
     """Test the representation of a 2Do task."""
 
@@ -51,10 +52,14 @@ class TestTwoDoTaskCLass(unittest.TestCase):
         """Create a simple task only by title."""
         title = 'A simple task by title'
         task = twodolib.TwoDoTask(title)
-        self.assertEqual(task.task_title, title)
+        self.assertEqual(task.task, title)
 
     def test_default_values_of_simple_task(self):
         """Create a task by title and check the other default values."""
+        task = twodolib.TwoDoTask('Save the world.')
+        self.assertEqual(task.task, 'Save the world.')
+        self.assertEqual(task.type, twodolib.TwoDoTask.TASK)
+        self.assertIsNone(task.for_list)
 
 
 if __name__ == '__main__':
