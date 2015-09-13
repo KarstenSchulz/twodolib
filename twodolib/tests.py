@@ -1,3 +1,5 @@
+"""Unittests for twodolib."""
+
 import unittest
 import urllib
 
@@ -5,6 +7,7 @@ import twodolib
 
 
 class TestShowUrls(unittest.TestCase):
+
     """Test the 4 urls to show several lists in 2Do App."""
 
     def test_showall_url(self):
@@ -29,6 +32,7 @@ class TestShowUrls(unittest.TestCase):
 
 
 class TestGetSimpleAddUrl(unittest.TestCase):
+
     """Test url for adding tasks to 2Do App."""
 
     def test_add_task_with_title_url(self):
@@ -37,3 +41,21 @@ class TestGetSimpleAddUrl(unittest.TestCase):
         quoted_title = urllib.quote(task_title)
         expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
         self.assertEqual(twodolib.get_add_url(task_title), expected_url)
+
+
+class TestTwoDoTaskCLass(unittest.TestCase):
+
+    """Test the representation of a 2Do task."""
+
+    def test_simple_task_with_title_only(self):
+        """Create a simple task only by title."""
+        title = 'A simple task by title'
+        task = twodolib.TwoDoTask(title)
+        self.assertEqual(task.task_title, title)
+
+    def test_default_values_of_simple_task(self):
+        """Create a task by title and check the other default values."""
+
+
+if __name__ == '__main__':
+    unittest.main()
