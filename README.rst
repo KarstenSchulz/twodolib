@@ -1,6 +1,6 @@
-===============================
-twodolib
-===============================
+======================================================
+twodolib - A commandline helper to add tasks to 2DoApp
+======================================================
 
 .. image:: https://img.shields.io/travis/KarstenSchulz/twodolib.svg
         :target: https://travis-ci.org/KarstenSchulz/twodolib
