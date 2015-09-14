@@ -1,4 +1,6 @@
 """Modules and functions to add tasks from the commandline to the 2Do App."""
+from __future__ import unicode_literals
+
 __version__ = '0.0.1'
 
 from urlhelper import showall_url  # noqa

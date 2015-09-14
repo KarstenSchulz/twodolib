@@ -4,8 +4,15 @@ Module to generate URLs to manage tasks, checlists and projects in 2DoApp.
 see http://www.2doapp.com
 
 """
+from __future__ import unicode_literals
+import sys
 
-import urllib
+PY3 = sys.version_info > (3,)
+if PY3:
+    from urllib.parse import quote
+else:
+    from urllib import quote
+
 
 showall_url = 'twodo://x-callback-url/showAll'
 showtoday_url = 'twodo://x-callback-url/showToday'
@@ -18,7 +25,7 @@ _base_url = 'twodo://x-callback-url/add?{}'
 
 def get_add_url(task_title):
     """Return a url to add the task, represented by the arguments."""
-    return _base_url.format('task=' + urllib.quote(task_title))
+    return _base_url.format('task=' + quote(task_title))
 
 
 class TwoDoTask(object):

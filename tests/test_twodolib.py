@@ -2,14 +2,17 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `twodolib` module."""
-
 import unittest
-import urllib
 import sys
-
 import twodolib
 from twodolib import TwoDoTask
 from twodolib import cli
+
+PY3 = sys.version_info > (3,)
+if PY3:
+    from urllib.parse import quote
+else:
+    from urllib import quote
 
 
 class TestShowUrls(unittest.TestCase):
@@ -44,7 +47,7 @@ class TestGetSimpleAddUrl(unittest.TestCase):
     def test_add_task_with_title_url(self):
         """Test adding a task only with a title."""
         task_title = 'Test title of the task.'
-        quoted_title = urllib.quote(task_title)
+        quoted_title = quote(task_title)
         expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
         self.assertEqual(twodolib.get_add_url(task_title), expected_url)
 
