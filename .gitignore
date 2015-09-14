@@ -45,3 +45,6 @@ docs/_build
 # private dev config
 .idea/*
 
+# auto generated doc files
+docs/modules.rst
+docs/twodolib.rst
