@@ -1,6 +1,7 @@
 """Command line interface to add tasks to 2Doapp."""
 
 import argparse
+import sys
 
 examples = '''
 Examples
@@ -25,8 +26,8 @@ task2do "Monthly subscription." --tags bill,payment -s --repeat 4
 '''
 
 
-def main():
-    """Parse command line arguments and create TwoDoTask object."""
+def parse_arguments(args):
+    """Return Namespace with parsed command line arguments."""
     p = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         prog='task2do',
@@ -34,11 +35,10 @@ def main():
         epilog=examples
     )
     p.add_argument('task', help='Title of the task.')
-    p.add_argument('-t', '--type', choices=[0, 1, 2],
+    p.add_argument('-t', '--type', choices=['0', '1', '2'],
                    help='Type of task to create. Following options are '
                         'supported: 0 - Task (default), 1 - Project, '
-                        '2 - Checklist',
-                   default=0)
+                        '2 - Checklist', default='0')
     p.add_argument('-l', '--list', metavar='FOR_LIST',
                    help='Name of an existing list in app, case-insensitive. '
                         'Default list or the currently visible list on screen '
@@ -46,9 +46,9 @@ def main():
                    default=None)
     p.add_argument('-n', '--note', help='Notes for the task',
                    default=None)
-    p.add_argument('-p', '--priority', choices=[0, 1, 2, 3],
+    p.add_argument('-p', '--priority', choices=['0', '1', '2', '3'],
                    help='priority: 0 (none), 1 (low), 2 (medium), 3 (high)',
-                   default=0)
+                   default='0')
     p.add_argument('-s', '--starred', help='Task is starred, if given.',
                    action='store_true', default=False)
     p.add_argument('--tags', default=None,
@@ -68,7 +68,7 @@ def main():
                         'and time specified - OR - Any number - Number of '
                         'days from Today, starting from 0. e.g. 0 = Today, '
                         '1 = Tomorrow and so on)')
-    p.add_argument('--repeat', default=None, choices=[1, 2, 3, 4],
+    p.add_argument('--repeat', default=None, choices=['1', '2', '3', '4'],
                    help='Repeat task: 1 (daily), 2 (weekly), 3 (bi-weekly), '
                         '4 (monthly))')
     p.add_argument('-i', '--ignoreDefaults', action='store_true',
@@ -76,8 +76,14 @@ def main():
                    help='If not set (default), apply any default due date / '
                         'time settings in app. Ignore default dates / times, '
                         'if given.')
-    p.parse_args()
+    return p.parse_args(args)
     # TODO: create TwoDoTask
+
+
+def main():
+    """Create a task in 2DoApp."""
+    args = parse_arguments(sys.argv[1:])
+    print(args)
 
 
 if __name__ == '__main__':
