@@ -18,10 +18,12 @@ the first release. Thank you!
 Description
 -----------
 
-Functions to manage the 2DoApp from the command line.
+Functions to manage the `2DoApp <http://www.2doapp.com>`_ from the command line.
+Intended for Mac and OS X users.
 
 * Free software: ISC license
-* Documentation: https://twodolib.readthedocs.org.
+
+.. Documentation: https://twodolib.readthedocs.org.
 
 Features
 --------
