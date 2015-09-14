@@ -9,6 +9,15 @@ twodolib - A commandline helper to add tasks to 2DoApp
         :target: https://pypi.python.org/pypi/twodolib
 
 
+ATTENTION Users
+---------------
+
+This software is not usable at the moment. Please be patient and stand by until
+the first release. Thank you!
+
+Description
+-----------
+
 Functions to manage the 2DoApp from the command line.
 
 * Free software: ISC license
