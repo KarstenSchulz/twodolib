@@ -4,9 +4,11 @@
    contain the root `toctree` directive.
 
 Welcome to twodolib's documentation!
-======================================
+====================================
 
 Contents:
+
+.. todolist::
 
 .. toctree::
    :maxdepth: 2
@@ -17,6 +19,7 @@ Contents:
    contributing
    authors
    history
+   modules
 
 Indices and tables
 ==================
