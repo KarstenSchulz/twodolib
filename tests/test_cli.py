@@ -4,6 +4,7 @@
 
 import unittest
 import sys
+import subprocess
 from twodolib import TwoDoTask
 from twodolib import cli
 
@@ -45,13 +46,13 @@ class TestCliParseArguments(unittest.TestCase):
         """A task can belong to a list: -l listname."""
         args = "TestTask -l business".split()
         parsed = cli.parse_arguments(args)
-        self.assertEqual(parsed.list, 'business')
+        self.assertEqual(parsed.for_list, 'business')
 
     def test_set_list_name_long_option(self):
         """A task can belong to a list: --list listname."""
         args = "TestTask --list business".split()
         parsed = cli.parse_arguments(args)
-        self.assertEqual(parsed.list, 'business')
+        self.assertEqual(parsed.for_list, 'business')
 
     def test_set_note_of_task(self):
         """A task can have a note: -n "some notes to the task ..."."""
@@ -181,3 +182,74 @@ class TestCliParseArguments(unittest.TestCase):
         sys.argv = []
         with self.assertRaises(SystemExit):
             cli.main()
+
+
+class TestCliGeneratesCorrectTwoDoTaskObject(unittest.TestCase):
+
+    """Command line args should create correct task object."""
+
+    def test_create_simple_task(self):
+        """Create a task with a title."""
+        parsed = cli.parse_arguments(['TestTask'])
+        task = TwoDoTask(**vars(parsed))
+        self.assertEqual(task.task, 'TestTask')
+
+    def test_create_simple_task_has_correct_defaults(self):
+        """Create a task with correct defaults."""
+        parsed = cli.parse_arguments(['TestTask'])
+        task = TwoDoTask(**vars(parsed))
+        self.assertEqual(task.task, 'TestTask')
+        self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
+        self.assertIsNone(task.for_list)
+        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.note)
+        self.assertEqual(task.priority, '0')
+        self.assertEqual(task.starred, '0')
+        self.assertIsNone(task.tags)
+        self.assertIsNone(task.due)
+        self.assertIsNone(task.dueTime)
+        self.assertIsNone(task.start)
+        self.assertIsNone(task.repeat)
+        self.assertIsNone(task.action)
+        self.assertEqual(task.ignoreDefaults, '0')
+
+    def test_task_has_repeat_and_priority(self):
+        """Create a task with weekly repetition and high priority."""
+        args = "TestTask --repeat 1 --priority 2".split()
+        parsed = cli.parse_arguments(args)
+        task = TwoDoTask(**vars(parsed))
+        self.assertEqual(task.task, 'TestTask')
+        self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
+        self.assertIsNone(task.for_list)
+        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.note)
+        self.assertEqual(task.priority, '2')
+        self.assertEqual(task.starred, '0')
+        self.assertIsNone(task.tags)
+        self.assertIsNone(task.due)
+        self.assertIsNone(task.dueTime)
+        self.assertIsNone(task.start)
+        self.assertEqual(task.repeat, '1')
+        self.assertIsNone(task.action)
+        self.assertEqual(task.ignoreDefaults, '0')
+
+    def test_task_is_starred(self):
+        """Create a starred task."""
+        args = "TestTask -s".split()
+        parsed = cli.parse_arguments(args)
+        task = TwoDoTask(**vars(parsed))
+        self.assertEqual(task.task, 'TestTask')
+        self.assertEqual(task.starred, '1')
+
+    def test_set_task_to_ignore_defaults(self):
+        """Create a task, which ignores date and time defaults."""
+        args = "TestTask -i".split()
+        parsed = cli.parse_arguments(args)
+        task = TwoDoTask(**vars(parsed))
+        self.assertEqual(task.task, 'TestTask')
+        self.assertEqual(task.ignoreDefaults, '1')
+
+    def test_call_of_cli_generates_no_output(self):
+        """Call command generates no output."""
+        msg = subprocess.check_output(['python', '-m', 'twodolib.cli', 'test'])
+        self.assertEqual(len(msg), 0)

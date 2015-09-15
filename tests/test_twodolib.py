@@ -3,7 +3,9 @@
 """Tests for `twodolib` module."""
 import unittest
 import sys
+
 import twodolib
+from twodolib import TwoDoTask
 
 PY3 = sys.version_info > (3,)
 if PY3:
@@ -59,6 +61,11 @@ class TestTwoDoTaskClass(unittest.TestCase):
         task = twodolib.TwoDoTask(title)
         self.assertEqual(task.task, title)
 
+    def test_task_with_title_length_of_zero_raises_valueerror(self):
+        """Create a simple task only by title."""
+        title = ''
+        self.assertRaises(ValueError, twodolib.TwoDoTask, title)
+
     def test_default_values_of_simple_task(self):
         """Create a task by title and check the presence of attributes."""
         task = twodolib.TwoDoTask('Save the world.')
@@ -67,12 +74,39 @@ class TestTwoDoTaskClass(unittest.TestCase):
         self.assertIsNone(task.for_list)
         self.assertIsNone(task.forParentTask)
         self.assertIsNone(task.note)
-        self.assertEqual(task.priority, 0)
-        self.assertEqual(task.starred, 0)
+        self.assertEqual(task.priority, '0')
+        self.assertEqual(task.starred, '0')
         self.assertIsNone(task.tags)
         self.assertIsNone(task.due)
         self.assertIsNone(task.dueTime)
         self.assertIsNone(task.start)
         self.assertIsNone(task.repeat)
         self.assertIsNone(task.action)
-        self.assertEqual(task.ignoreDefaults, 0)
+        self.assertEqual(task.ignoreDefaults, '0')
+
+    def test_simple_task_url_is_correct(self):
+        """The URL for a simple task is correct."""
+        task_title = 'Test title of the task.'
+        quoted_title = quote(task_title)
+        expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
+        task = TwoDoTask(task_title)
+        self.assertEqual(task.url(), expected_url)
+
+    def test_project_task_url_is_correct(self):
+        """The URL for a project task is correct."""
+        task_title = 'Test title of the task.'
+        quoted_title = quote(task_title)
+        expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
+        expected_url += '&type=1'
+        task = TwoDoTask(task_title, type='1')
+        self.assertEqual(task.url(), expected_url)
+
+    def test_task_for_a_list_url_is_correct(self):
+        """The URL for a task for a list is correct."""
+        task_title = 'Test title of the task.'
+        quoted_title = quote(task_title)
+        expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
+        quoted_list = quote('urgent errands')
+        expected_url += '&for_list={}'.format(quoted_list)
+        task = TwoDoTask(task_title, for_list='urgent errands')
+        self.assertEqual(task.url(), expected_url)

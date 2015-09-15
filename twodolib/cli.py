@@ -41,7 +41,7 @@ def parse_arguments(args):
                    help='Type of task to create. Following options are '
                         'supported: 0 - Task (default), 1 - Project, '
                         '2 - Checklist', default='0')
-    p.add_argument('-l', '--list', metavar='FOR_LIST',
+    p.add_argument('-l', '--list', metavar='FOR_LIST', dest='for_list',
                    help='Name of an existing list in app, case-insensitive. '
                         'Default list or the currently visible list on screen '
                         'is selected if not used.',
@@ -87,5 +87,5 @@ def main():
     parse_arguments(sys.argv[1:])
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     main()
