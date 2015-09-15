@@ -8,6 +8,8 @@ twodolib - A commandline helper to add tasks to 2DoApp
 .. image:: https://img.shields.io/pypi/v/twodolib.svg
         :target: https://pypi.python.org/pypi/twodolib
 
+.. image:: https://coveralls.io/repos/KarstenSchulz/twodolib/badge.svg?branch=master&service=github
+        :target: https://coveralls.io/github/KarstenSchulz/twodolib?branch=master
 
 ATTENTION Users
 ---------------
