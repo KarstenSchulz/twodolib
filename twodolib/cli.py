@@ -84,8 +84,7 @@ def parse_arguments(args):
 
 def main():
     """Create a task in 2DoApp."""
-    args = parse_arguments(sys.argv[1:])
-    print(args)
+    parse_arguments(sys.argv[1:])
 
 
 if __name__ == '__main__':
