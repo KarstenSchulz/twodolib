@@ -16,31 +16,31 @@ class TestCliParseArguments(unittest.TestCase):
     def test_default_task_is_task_type(self):
         """Default task type should be 'task'."""
         parsed = cli.parse_arguments(['TestTask'])
-        self.assertEqual(parsed.type, TwoDoTask.TASK_TYPE)
+        self.assertEqual(parsed.task_type, TwoDoTask.TASK_TYPE)
 
     def test_set_task_type_project(self):
         """A task can be a 'project' type: -t 1."""
         args = "TestTask -t 1".split()
         parsed = cli.parse_arguments(args)
-        self.assertEqual(parsed.type, TwoDoTask.PROJECT_TYPE)
+        self.assertEqual(parsed.task_type, TwoDoTask.PROJECT_TYPE)
 
     def test_set_task_type_project_long_option(self):
         """A task can be a 'project' type: --type 1."""
         args = "TestTask --type 1".split()
         parsed = cli.parse_arguments(args)
-        self.assertEqual(parsed.type, TwoDoTask.PROJECT_TYPE)
+        self.assertEqual(parsed.task_type, TwoDoTask.PROJECT_TYPE)
 
     def test_set_task_type_checklist(self):
         """A task can be a 'checklist' type: -t 2."""
         args = "TestTask -t 2".split()
         parsed = cli.parse_arguments(args)
-        self.assertEqual(parsed.type, TwoDoTask.CHECKLIST_TYPE)
+        self.assertEqual(parsed.task_type, TwoDoTask.CHECKLIST_TYPE)
 
     def test_set_task_type_checklist_long_option(self):
         """A task can be a 'checklist' type: --type 2."""
         args = "TestTask --type 2".split()
         parsed = cli.parse_arguments(args)
-        self.assertEqual(parsed.type, TwoDoTask.CHECKLIST_TYPE)
+        self.assertEqual(parsed.task_type, TwoDoTask.CHECKLIST_TYPE)
 
     def test_set_list_name(self):
         """A task can belong to a list: -l listname."""

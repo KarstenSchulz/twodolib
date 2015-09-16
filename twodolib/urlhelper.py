@@ -6,6 +6,7 @@ see http://www.2doapp.com
 """
 from __future__ import unicode_literals
 import sys
+from datetime import datetime
 
 PY3 = sys.version_info > (3,)
 if PY3:
@@ -13,7 +14,6 @@ if PY3:
     from urllib.parse import quote  # pragma: no cover
 else:
     from urllib import quote
-
 
 showall_url = 'twodo://x-callback-url/showAll'
 showtoday_url = 'twodo://x-callback-url/showToday'
@@ -27,7 +27,6 @@ def get_add_url(task_title):
 
 
 class TwoDoTask(object):
-
     """Represents all attributes of a task in the 2DoApp."""
 
     BASE_URL = 'twodo://x-callback-url/add?{}'
@@ -35,33 +34,30 @@ class TwoDoTask(object):
     PROJECT_TYPE = '1'
     CHECKLIST_TYPE = '2'
 
-    def __init__(self, task, type=TASK_TYPE, for_list=None,
-                 for_parent_task=None, note=None, priority='0', starred=False,
-                 tags=None, due=None, dueTime=None, start=None, repeat=None,
-                 action=None, ignoreDefaults=False):
+    PRIO_NONE = '0'
+    PRIO_LOW = '1'
+    PRIO_MEDIUM = '2'
+    PRIO_HIGH = '3'
+
+    def __init__(self, task, task_type=TASK_TYPE, for_list=None,
+                 for_parent_task=None, note=None, priority=PRIO_NONE,
+                 starred=False, tags=None, due=None, dueTime=None, start=None,
+                 repeat=None, action=None, ignoreDefaults=False):
         """Create a 2DoApp-task."""
-        if len(task) == 0:
-            raise ValueError('Task title must have content!')
         self.task = task
-        self.type = type
+        self.type = task_type
         self.for_list = for_list
         self.forParentTask = for_parent_task
         self.note = note
         self.priority = priority
-        if starred:
-            self.starred = '1'
-        else:
-            self.starred = '0'
+        self.starred = starred
         self.tags = tags
         self.due = due
         self.dueTime = dueTime
         self.start = start
         self.repeat = repeat
         self.action = action
-        if ignoreDefaults:
-            self.ignoreDefaults = '1'
-        else:
-            self.ignoreDefaults = '0'
+        self.ignoreDefaults = ignoreDefaults
 
     def url(self):
         """Return the URL for the task of this object."""
@@ -70,4 +66,132 @@ class TwoDoTask(object):
             urlpath += '&type={}'.format(self.type)
         if self.for_list is not None:
             urlpath += '&for_list={}'.format(quote(self.for_list))
+        if self.note is not None:
+            urlpath += '&note={}'.format(quote(self.note))
+        if self.priority != '0':
+            urlpath += '&priority={}'.format(self.priority)
+        if self.starred == '1':
+            urlpath += '&starred=1'
+        if self.tags is not None:
+            urlpath += '&tags={}'.format(quote(self.tags))
+        if self.due is not None:
+            urlpath += '&due={}'.format(quote(self.due))
+        if self.dueTime is not None:
+            urlpath += '&dueTime={}'.format(quote(self.dueTime))
         return self.BASE_URL.format(urlpath)
+
+    @property
+    def task(self):
+        """The task's title text."""
+        return self._task
+
+    @task.setter
+    def task(self, task_title):
+        if task_title is None or len(task_title) == 0:
+            raise ValueError('Task title must have content!')
+        self._task = task_title
+
+    @task.deleter
+    def task(self):
+        del self._task
+
+    @property
+    def type(self):
+        """Type of the task.
+
+        One of TASK_TYPE, PROJECT_TYPE or CHECKLIST_TYPE.
+        """
+        return self._type
+
+    @type.setter
+    def type(self, task_type):
+        task_type = str(task_type)
+        if task_type not in [self.TASK_TYPE, self.PROJECT_TYPE,
+                             self.CHECKLIST_TYPE]:
+            msg = "Task type must be one of "
+            msg += "'{}', '{}' or '{}', not '{}'".format(self.TASK_TYPE,
+                                                         self.PROJECT_TYPE,
+                                                         self.CHECKLIST_TYPE,
+                                                         task_type)
+            raise ValueError(msg)
+        self._type = task_type
+
+    @type.deleter
+    def type(self):
+        del self._type
+
+    @property
+    def priority(self):
+        """Priority of the task.
+
+        One of PRIO_NONE, PRIO_LOW, PRIO_MEDIUM or PRIO_HIGH.
+        """
+        return self._priority
+
+    @priority.setter
+    def priority(self, priority):
+        priority = str(priority)
+        if priority not in [self.PRIO_NONE, self.PRIO_LOW, self.PRIO_MEDIUM,
+                            self.PRIO_HIGH]:
+            msg = "Task priority must be one of '{}', '{}', '{}' or '{}'"
+            msg += ", not '{}'".format(self.PRIO_NONE,
+                                       self.PRIO_LOW,
+                                       self.PRIO_MEDIUM,
+                                       self.PRIO_HIGH,
+                                       priority)
+            raise ValueError(msg)
+        self._priority = priority
+
+    @priority.deleter
+    def priority(self):
+        del self._priority
+
+    @property
+    def starred(self):
+        """'1' if starred, otherwise '0'."""
+        return self._starred
+
+    @starred.setter
+    def starred(self, starred):
+        """Determine the value for self._starred.
+
+        for starred in [True, '1', 1]
+        """
+        self._starred = '1' if starred in [True, '1', 1] else '0'
+
+    @starred.deleter
+    def starred(self):
+        del self._starred
+
+    @property
+    def ignoreDefaults(self):
+        """If '1', ignore date and time defaults when storing task."""
+        return self._ignoreDefaults
+
+    @ignoreDefaults.setter
+    def ignoreDefaults(self, ignoreDefaults):
+        self._ignoreDefaults = '1' if ignoreDefaults in [True, '1', 1] else '0'
+
+    @ignoreDefaults.deleter
+    def ignoreDefaults(self):
+        del self._ignoreDefaults
+
+    @property
+    def due(self):
+        """The due date represented as: YYYY-MM-DD or as number of days."""
+        return self._due
+
+    @due.setter
+    def due(self, due):
+        # raise ValueError if wrong format (no int, no date)
+        self._due = None
+        if due is not None:
+            try:
+                int(due)
+            except ValueError:
+                datetime.strptime(due, '%Y-%m-%d')
+            self._due = str(due)
+
+    @due.deleter
+    def due(self):
+        del self._due

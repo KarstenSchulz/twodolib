@@ -37,7 +37,7 @@ def parse_arguments(args):
         epilog=examples
     )
     p.add_argument('task', help='Title of the task.')
-    p.add_argument('-t', '--type', choices=['0', '1', '2'],
+    p.add_argument('-t', '--type', choices=['0', '1', '2'], dest='task_type',
                    help='Type of task to create. Following options are '
                         'supported: 0 - Task (default), 1 - Project, '
                         '2 - Checklist', default='0')
