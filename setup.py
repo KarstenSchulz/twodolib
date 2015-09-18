@@ -7,7 +7,6 @@ try:
 except ImportError:
     from distutils.core import setup
 
-
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
@@ -33,18 +32,24 @@ setup(
     packages=[
         'twodolib',
     ],
-    package_dir={'twodolib':
-                 'twodolib'},
+    package_dir={'twodolib': 'twodolib'},
     include_package_data=True,
+    entry_points={
+        'console_scripts': [
+            'task2do = twodolib.cli:main'
+        ]
+    },
     install_requires=requirements,
     license="ISCL",
     zip_safe=False,
     keywords='twodolib',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
-        'Intended Audience :: Developers',
+        'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: ISC License (ISCL)',
+        'Operating System :: MacOS :: MacOS X',
         'Natural Language :: English',
+        'Topic :: Productivity',
         "Programming Language :: Python :: 2",
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
