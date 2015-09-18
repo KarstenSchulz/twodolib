@@ -46,7 +46,7 @@ clean-test:
 	rm -fr htmlcov/
 
 lint:
-	flake8 twodolib tests
+	flake8 twodolib tests setup.py
 
 test:
 	python setup.py test
