@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `twodolib` module."""
+from __future__ import print_function, unicode_literals
 import unittest
 import sys
 
@@ -189,6 +190,15 @@ class TestGeneratedUrlsOfTwoDoTask(unittest.TestCase):
         task = TwoDoTask(task_title, dueTime=task_duetime)
         self.assertEqual(task.url(), expected_url)
 
+    def test_task_with_daily_repeat_url_is_correct(self):
+        """The URL for a task with daily repetition is correct."""
+        task_title = 'Test title of the task.'
+        quoted_title = quote(task_title)
+        expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
+        expected_url += '&repeat={}'.format(TwoDoTask.DAILY)
+        task = TwoDoTask(task_title, repeat='1')
+        self.assertEqual(task.url(), expected_url)
+
 
 class TestTwoDoTaskValidation(unittest.TestCase):
     """Test the validation of arguments, when creating a TwoDoTask object."""
@@ -302,3 +312,8 @@ class TestTwoDoTaskValidation(unittest.TestCase):
         task_duetime = "8pm"
         self.assertRaises(ValueError, TwoDoTask, task_title,
                           dueTime=task_duetime)
+
+    def test_wrong_repetition_raises_valueerror(self):
+        """Wrong values for repetition raise ValueError."""
+        self.assertRaises(ValueError, TwoDoTask, 'TestTask', repeat=0)
+        self.assertRaises(ValueError, TwoDoTask, 'TestTask', repeat='5')

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `twodolib.cli` module."""
-
+from __future__ import print_function, unicode_literals
 import unittest
 import sys
 import subprocess
@@ -249,7 +249,7 @@ class TestCliGeneratesCorrectTwoDoTaskObject(unittest.TestCase):
         self.assertEqual(task.task, 'TestTask')
         self.assertEqual(task.ignoreDefaults, '1')
 
-    def test_call_of_cli_generates_no_output(self):
+    def test_call_of_cli_generates_output(self):
         """Call command generates no output."""
         msg = subprocess.check_output(['python', '-m', 'twodolib.cli', 'test'])
-        self.assertEqual(len(msg), 0)
+        self.assertGreater(len(msg), 0)
