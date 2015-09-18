@@ -4,6 +4,14 @@ from __future__ import print_function, unicode_literals
 import argparse
 import sys
 
+import twodolib
+from . urlhelper import TwoDoTask
+
+usage_description = """\
+Program to create tasks in 2Do. The default behavior is to print the
+generated URL to stdout. Please use the '-g' or '--go'' option, if you want to
+send the task directly to the 2DoApp.
+"""
 
 examples = '''
 Examples
@@ -30,10 +38,11 @@ task2do "Monthly subscription." --tags bill,payment -s --repeat 4
 
 def parse_arguments(args):
     """Return Namespace with parsed command line arguments."""
+    version = '%(prog)s {}'.format(twodolib.__version__)
     p = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         prog='task2do',
-        description='''Program to create tasks in 2Do.''',
+        description=usage_description,
         epilog=examples
     )
     p.add_argument('task', help='Title of the task.')
@@ -78,13 +87,15 @@ def parse_arguments(args):
                    help='If not set (default), apply any default due date / '
                         'time settings in app. Ignore default dates / times, '
                         'if given.')
+    p.add_argument('-v', '--version', action='version', version=version)
     return p.parse_args(args)
-    # TODO: create TwoDoTask
 
 
 def main():
     """Create a task in 2DoApp."""
-    parse_arguments(sys.argv[1:])
+    args = parse_arguments(sys.argv[1:])
+    t = TwoDoTask(**vars(args))
+    print(t.url())
 
 
 if __name__ == '__main__':  # pragma: no cover
