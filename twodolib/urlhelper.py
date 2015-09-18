@@ -39,6 +39,11 @@ class TwoDoTask(object):
     PRIO_MEDIUM = '2'
     PRIO_HIGH = '3'
 
+    DAILY = '1'
+    WEEKLY = '2'
+    BI_WEEKLY = '3'
+    MONTHLY = '4'
+
     def __init__(self, task, task_type=TASK_TYPE, for_list=None,
                  for_parent_task=None, note=None, priority=PRIO_NONE,
                  starred=False, tags=None, due=None, dueTime=None, start=None,
@@ -62,13 +67,13 @@ class TwoDoTask(object):
     def url(self):
         """Return the URL for the task of this object."""
         urlpath = 'task=' + quote(self.task)
-        if self.type != '0':
+        if self.type != self.TASK_TYPE:
             urlpath += '&type={}'.format(self.type)
         if self.for_list is not None:
             urlpath += '&for_list={}'.format(quote(self.for_list))
         if self.note is not None:
             urlpath += '&note={}'.format(quote(self.note))
-        if self.priority != '0':
+        if self.priority != self.PRIO_NONE:
             urlpath += '&priority={}'.format(self.priority)
         if self.starred == '1':
             urlpath += '&starred=1'
@@ -78,6 +83,9 @@ class TwoDoTask(object):
             urlpath += '&due={}'.format(quote(self.due))
         if self.dueTime is not None:
             urlpath += '&dueTime={}'.format(quote(self.dueTime))
+        # TODO: add start
+        if self.repeat is not None:
+            urlpath += '&repeat={}'.format(self.repeat)
         return self.BASE_URL.format(urlpath)
 
     @property
@@ -91,15 +99,12 @@ class TwoDoTask(object):
             raise ValueError('Task title must have content!')
         self._task = task_title
 
-    @task.deleter
-    def task(self):
-        del self._task
-
     @property
     def type(self):
         """Type of the task.
 
-        One of TASK_TYPE, PROJECT_TYPE or CHECKLIST_TYPE.
+        One of TwoDoTask.TASK_TYPE, TwoDoTask.PROJECT_TYPE or
+        TwoDoTask.CHECKLIST_TYPE.
         """
         return self._type
 
@@ -116,15 +121,12 @@ class TwoDoTask(object):
             raise ValueError(msg)
         self._type = task_type
 
-    @type.deleter
-    def type(self):
-        del self._type
-
     @property
     def priority(self):
         """Priority of the task.
 
-        One of PRIO_NONE, PRIO_LOW, PRIO_MEDIUM or PRIO_HIGH.
+        One of TwoDoTask.PRIO_NONE, TwoDoTask.PRIO_LOW, TwoDoTask.PRIO_MEDIUM
+        or TwoDoTask.PRIO_HIGH.
         """
         return self._priority
 
@@ -142,10 +144,6 @@ class TwoDoTask(object):
             raise ValueError(msg)
         self._priority = priority
 
-    @priority.deleter
-    def priority(self):
-        del self._priority
-
     @property
     def starred(self):
         """'1' if starred, otherwise '0'."""
@@ -159,10 +157,6 @@ class TwoDoTask(object):
         """
         self._starred = '1' if starred in [True, '1', 1] else '0'
 
-    @starred.deleter
-    def starred(self):
-        del self._starred
-
     @property
     def ignoreDefaults(self):
         """If '1', ignore date and time defaults when storing task."""
@@ -171,10 +165,6 @@ class TwoDoTask(object):
     @ignoreDefaults.setter
     def ignoreDefaults(self, ignoreDefaults):
         self._ignoreDefaults = '1' if ignoreDefaults in [True, '1', 1] else '0'
-
-    @ignoreDefaults.deleter
-    def ignoreDefaults(self):
-        del self._ignoreDefaults
 
     @property
     def due(self):
@@ -192,6 +182,22 @@ class TwoDoTask(object):
                 datetime.strptime(due, '%Y-%m-%d')
             self._due = str(due)
 
-    @due.deleter
-    def due(self):
-        del self._due
+    @property
+    def repeat(self):
+        """Repetition intervall of the task.
+
+        One of TwoDoTask.DAILY, TwoDoTask.WEEKLY, TwoDoTask.BI_WEEKLY,
+        TwoDoTask.MONTHLY.
+        """
+        return self._repeat
+
+    @repeat.setter
+    def repeat(self, repeat):
+        if repeat not in [None, self.DAILY, self.WEEKLY, self.BI_WEEKLY,
+                          self.MONTHLY]:
+            msg = "Task repetition (repeat) must be one of "
+            msg += "'{}', '{}', '{}' or '{}', not '{}'"
+            msg = msg.format(self.DAILY, self.WEEKLY, self.BI_WEEKLY,
+                             self.MONTHLY, repeat)
+            raise ValueError(msg)
+        self._repeat = repeat
