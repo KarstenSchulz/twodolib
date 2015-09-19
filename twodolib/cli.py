@@ -23,14 +23,15 @@ task2do -p 3 "High priority task."
 - or -
 task2do --priority 3 "High priority task."
 
-Add a weekly repeating task:
-task2do "change clothes" --repeat 2
+Add a task due today and repeated weekly:
+task2do "change clothes" -d 0 --repeat 2
 
 Add a task due at 6pm today
-task2do "Watch EX_MACHINA" --dueTime 18:00
+task2do "Watch EX_MACHINA" --due 0 --dueTime 18:00
 
-Add a task with tags, which is also starred and repeated monthly
-task2do "Monthly subscription." --tags bill,payment -s --repeat 4
+Add a task due tomorrow, with tags, which is also starred and repeated monthly
+task2do "Monthly subscription." --tags bill,payment -s --due 1 --repeat 4
+
 """
 
 
