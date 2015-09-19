@@ -11,9 +11,7 @@ usage_description = """\
 Program to create tasks in 2Do. The default behavior is to print the
 generated URL to stdout. Please use the '-g' or '--go'' option, if you want to
 send the task directly to the 2DoApp.
-"""
 
-examples = '''
 Examples
 ========
 
@@ -33,7 +31,7 @@ task2do "Watch EX_MACHINA" --dueTime 18:00
 
 Add a task with tags, which is also starred and repeated monthly
 task2do "Monthly subscription." --tags bill,payment -s --repeat 4
-'''
+"""
 
 
 def parse_arguments(args):
@@ -43,7 +41,6 @@ def parse_arguments(args):
         formatter_class=argparse.RawDescriptionHelpFormatter,
         prog='task2do',
         description=usage_description,
-        epilog=examples
     )
     p.add_argument('task', help='Title of the task.')
     p.add_argument('-t', '--type', choices=['0', '1', '2'], dest='task_type',
