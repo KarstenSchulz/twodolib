@@ -23,7 +23,7 @@ test_requirements = [
 
 setup(
     name='twodolib',
-    version='0.0.1',
+    version='0.2.0',
     description="Functions to manage the 2DoApp from the command line.",
     long_description=readme + '\n\n' + history,
     author="Karsten Schulz",

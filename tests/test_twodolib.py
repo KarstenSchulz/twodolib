@@ -190,6 +190,28 @@ class TestGeneratedUrlsOfTwoDoTask(unittest.TestCase):
         task = TwoDoTask(task_title, dueTime=task_duetime)
         self.assertEqual(task.url(), expected_url)
 
+    def test_task_with_start_time_url_is_correct(self):
+        """The URL for a task with a start time ist correct."""
+        task_title = 'Test title of the task.'
+        quoted_title = quote(task_title)
+        task_start = "2015-10-01 12:00"
+        quoted_start = quote(task_start)
+        expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
+        expected_url += '&start={}'.format(quoted_start)
+        task = TwoDoTask(task_title, start=task_start)
+        self.assertEqual(task.url(), expected_url)
+
+    def test_task_with_rel_start_time_url_is_correct(self):
+        """The URL for a task with a relative start date ist correct."""
+        task_title = 'Test title of the task.'
+        quoted_title = quote(task_title)
+        task_start = "14"
+        quoted_start = quote(task_start)
+        expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
+        expected_url += '&start={}'.format(quoted_start)
+        task = TwoDoTask(task_title, start=task_start)
+        self.assertEqual(task.url(), expected_url)
+
     def test_task_with_daily_repeat_url_is_correct(self):
         """The URL for a task with daily repetition is correct."""
         task_title = 'Test title of the task.'

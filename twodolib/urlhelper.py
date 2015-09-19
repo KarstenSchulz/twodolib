@@ -83,7 +83,8 @@ class TwoDoTask(object):
             urlpath += '&due={}'.format(quote(self.due))
         if self.dueTime is not None:
             urlpath += '&dueTime={}'.format(quote(self.dueTime))
-        # TODO: add start
+        if self.start is not None:
+            urlpath += '&start={}'.format(quote(self.start))
         if self.repeat is not None:
             urlpath += '&repeat={}'.format(self.repeat)
         return self.BASE_URL.format(urlpath)
@@ -168,7 +169,7 @@ class TwoDoTask(object):
 
     @property
     def due(self):
-        """The due date represented as: YYYY-MM-DD or as number of days."""
+        """The due date represented as: YYYY-mm-dd or as number of days."""
         return self._due
 
     @due.setter
@@ -181,6 +182,26 @@ class TwoDoTask(object):
             except ValueError:
                 datetime.strptime(due, '%Y-%m-%d')
             self._due = str(due)
+
+    @property
+    def start(self):
+        """The start date and time.
+
+        The formats are either  YYYY-mm-dd HH:MM or an int (number of days
+        from today.
+        """
+        return self._start
+
+    @start.setter
+    def start(self, start):
+        # raise ValueError if wrong format (no int, no date)
+        self._start = None
+        if start is not None:
+            try:
+                int(start)
+            except ValueError:
+                datetime.strptime(start, '%Y-%m-%d %H:%M')
+            self._start = str(start)
 
     @property
     def repeat(self):

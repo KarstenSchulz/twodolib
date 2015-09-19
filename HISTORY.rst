@@ -3,10 +3,10 @@
 History
 -------
 
-0.0.2 (unreleased)
+0.1.0 (unreleased)
 ------------------
 
-* ADD: more commandline options implemented: repeat, due, dueTime
+* ADD: more commandline options implemented: repeat, due, dueTime, start
 * ADD: docs
 
 
