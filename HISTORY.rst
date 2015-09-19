@@ -6,7 +6,7 @@ History
 0.0.2 (unreleased)
 ------------------
 
-* ADD: more commandline options implemented: repeat, due, dueTime, repeat
+* ADD: more commandline options implemented: repeat, due, dueTime
 * ADD: docs
 
 
