@@ -3,14 +3,13 @@
 """Tests for `twodolib.cli` module."""
 from __future__ import print_function, unicode_literals
 import unittest
-import sys
+from mock import patch
 import subprocess
 from twodolib import TwoDoTask
 from twodolib import cli
 
 
 class TestCliParseArguments(unittest.TestCase):
-
     """Test the command line interface and argument parsing."""
 
     def test_default_task_is_task_type(self):
@@ -179,13 +178,11 @@ class TestCliParseArguments(unittest.TestCase):
 
     def test_missing_args_raise_system_exit(self):
         """Raise SystemExit, if args are missing."""
-        sys.argv = []
         with self.assertRaises(SystemExit):
-            cli.main()
+            cli.main([])
 
 
 class TestCliGeneratesCorrectTwoDoTaskObject(unittest.TestCase):
-
     """Command line args should create correct task object."""
 
     def test_create_simple_task(self):
@@ -253,3 +250,32 @@ class TestCliGeneratesCorrectTwoDoTaskObject(unittest.TestCase):
         """Call command generates no output."""
         msg = subprocess.check_output(['python', '-m', 'twodolib.cli', 'test'])
         self.assertGreater(len(msg), 0)
+
+
+class CliCallsWebbrowser(unittest.TestCase):
+    """Make sure, that cli handles the URL correctly."""
+
+    def setUp(self):
+        """Setup args and url for testing."""
+        self.url = 'twodo://x-callback-url/add?task=TestTask'
+
+    @patch('twodolib.cli.webbrowser.open')
+    def test_openwebbrowser_gets_called(self, web_mock):
+        """Call webbrowser, if option ``-e`` is given."""
+        args = "TestTask -e".split()
+        cli.main(args)
+        web_mock.assert_called_with(self.url)
+
+    @patch('twodolib.cli.webbrowser.open')
+    def test_openwebbrowser_gets_called_long_option(self, web_mock):
+        """Call webbrowser, if option ``--execute`` is given."""
+        args = "TestTask --execute".split()
+        cli.main(args)
+        web_mock.assert_called_with(self.url)
+
+    @patch('twodolib.cli.print')
+    def test_print_url_gets_called(self, print_mock):
+        """Print URL, if option ``-e`` is not given."""
+        args = "TestTask".split()
+        cli.main(args)
+        print_mock.assert_called_with(self.url)

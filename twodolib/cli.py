@@ -4,6 +4,7 @@
 from __future__ import print_function, unicode_literals
 import argparse
 import sys
+import webbrowser
 
 import twodolib
 from . urlhelper import TwoDoTask
@@ -93,16 +94,17 @@ def parse_arguments(args):
     return p.parse_args(args)
 
 
-def main():
+def main(arguments=None):
     """Create a task in 2DoApp."""
-    args = parse_arguments(sys.argv[1:])
+    if arguments is None:
+        arguments = sys.argv[1:]
+    args = parse_arguments(arguments)
     t = TwoDoTask(**vars(args))
     if args.execute:
-        import webbrowser
         webbrowser.open(t.url())
     else:
         print(t.url())
 
 
 if __name__ == '__main__':  # pragma: no cover
-    main()
+    main(sys.argv[1:])
