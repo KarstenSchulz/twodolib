@@ -5,10 +5,13 @@ Usage
 Using twodolib as a Python module
 ---------------------------------
 
-To use twodolib in a project::
+To use twodolib and create a task::
 
-    import twodolib
+    >>> from twodolib import TwoDoTask
+    >>> my_task = TwoDoTask('Save the world.', priority=TwoDoTask.PRIO_HIGH)
 
+    >>> my_task.url()
+    u'twodo://x-callback-url/add?task=Save%20the%20world.&priority=3'
 
 
 Using twodolib from the command line
@@ -24,11 +27,12 @@ And you will get the URL to add a task, which is due tomorrow::
     twodo://x-callback-url/add?task=Dinner%20at%208pm.&due=1
 
 Use the URL with Safari or Alfred or another launcher to actually create the
-task.
+task. Or just provide the ``-e, --execute`` option, to actually create the
+task in your 2Do App::
 
+    task2do -e -d 1 "Dinner at 8pm."
 
-
-::
+You'll get help with the ``-h, --help`` option::
 
     task2do -h
     usage: task2do [-h] [-t {0,1,2}] [-l FOR_LIST] [-n NOTE] [-p {0,1,2,3}] [-s]
@@ -88,19 +92,17 @@ Add a task due Tomorrow::
 Add a task with high priority::
 
     task2do -p 3 "High priority task."
-- or -
-::
-
     task2do --priority 3 "High priority task."
 
-Add a weekly repeating task::
+Add a task due today and repeated weekly::
 
-    task2do "change clothes" --repeat 2
+    task2do "change clothes" -d 0 --repeat 2
 
 Add a task due at 6pm today::
 
-    task2do "Watch EX_MACHINA" --dueTime 18:00
+    task2do "Watch EX_MACHINA" --due 0 --dueTime 18:00
 
-Add a task with tags, which is also starred and repeated monthly::
+Add a task due tomorrow, with tags, which is also starred and repeated monthly::
 
-    task2do "Monthly subscription." --tags bill,payment -s --repeat 4
+    task2do "Monthly subscription." --tags bill,payment -s --due 1 --repeat 4
+

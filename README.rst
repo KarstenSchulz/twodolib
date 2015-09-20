@@ -55,18 +55,28 @@ If you want to actually add the task to your 2Do App, use the ``-e`` or
 Features
 --------
 
+* runs with Python 3 and Python 2
 * Create tasks on the command line and show the corresponding URL scheme, for
   copy and pasting it.
 * Create tasks on the command line and open the corresponding URL scheme.
 
+See the documentation at http://twodolib.readthedocs.org/en/latest/
+
 Install
 -------
+
+See `docs/installation.rst <https://github.com/KarstenSchulz/twodolib/blob/master/docs/installation.rst>`_
+(It's just ``pip install twodolib``)
+
 
 Dependencies
 ------------
 
+* wheel
 
+For testing:
 
+* mock
 
 License
 -------

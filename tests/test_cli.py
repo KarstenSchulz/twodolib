@@ -5,6 +5,7 @@ from __future__ import print_function, unicode_literals
 import unittest
 from mock import patch
 import subprocess
+import sys
 from twodolib import TwoDoTask
 from twodolib import cli
 
@@ -279,3 +280,9 @@ class CliCallsWebbrowser(unittest.TestCase):
         args = "TestTask".split()
         cli.main(args)
         print_mock.assert_called_with(self.url)
+
+    def test_use_sys_args(self):
+        """Use sys.argv and raise if main is called without args."""
+        sys.argv = []
+        with self.assertRaises(SystemExit):
+            cli.main()
