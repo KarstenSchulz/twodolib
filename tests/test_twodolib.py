@@ -106,7 +106,7 @@ class TestGeneratedUrlsOfTwoDoTask(unittest.TestCase):
         task_list = 'urgent errands'
         quoted_list = quote(task_list)
         expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
-        expected_url += '&for_list={}'.format(quoted_list)
+        expected_url += '&forlist={}'.format(quoted_list)
         task = TwoDoTask(task_title, for_list=task_list)
         self.assertEqual(task.url(), expected_url)
 

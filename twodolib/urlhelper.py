@@ -70,7 +70,7 @@ class TwoDoTask(object):
         if self.type != self.TASK_TYPE:
             urlpath += '&type={}'.format(self.type)
         if self.for_list is not None:
-            urlpath += '&for_list={}'.format(quote(self.for_list))
+            urlpath += '&forlist={}'.format(quote(self.for_list))
         if self.note is not None:
             urlpath += '&note={}'.format(quote(self.note))
         if self.priority != self.PRIO_NONE:
