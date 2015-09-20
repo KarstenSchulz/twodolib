@@ -22,29 +22,35 @@ twodolib - A commandline helper to add tasks to 2DoApp
         :target: https://opensource.org/licenses/ISC
 
 
-ATTENTION Users
----------------
-
-This software is not usable at the moment. Please be patient and stand by until
-the first release. Thank you!
-
 Description
 -----------
 
-Functions to add tasks, projects and checklists on OS X to the
+This package provides a library ``twodolib`` and a command line utility
+``task2do`` to add tasks, projects and checklists on OS X to the
 `2DoApp <http://www.2doapp.com>`_ from the command line.
 
 Since version 1.5 (Mac) 2Do supports adding tasks by using an URL scheme.
+For example, if you want to add the task *Save the world.*, you can open the
+URL::
 
-If you want to add a task, you can open the URL::
+    twodo://x-callback-url/add?task=Save%20the%20world.
 
-    twodo://x-callback-url/add?task=Save%20the%20world
+to add this task to your 2Do App.
 
-The task ``Save the world`` will be added to your default list.
+The ``task2do`` command supports creating such URLs from the command line.
+To print an URL of such a task, enter::
 
-* Free software: ISC license
+    task2do "Save the world."
 
-.. Documentation: https://twodolib.readthedocs.org.
+which prints the URL to stdout::
+
+    twodo://x-callback-url/add?task=Save%20the%20world.
+
+If you want to actually add the task to your 2Do App, use the ``-e`` or
+``--execute`` option::
+
+        task2do -e "Save the world."
+        # no output here, but the task should be in your standard list in 2Do
 
 Features
 --------
@@ -52,4 +58,20 @@ Features
 * Create tasks on the command line and show the corresponding URL scheme, for
   copy and pasting it.
 * Create tasks on the command line and open the corresponding URL scheme.
+
+Install
+-------
+
+Dependencies
+------------
+
+
+
+
+License
+-------
+
+* Free software: ISC license
+
+.. Documentation: https://twodolib.readthedocs.org.
 
