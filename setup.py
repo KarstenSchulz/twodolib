@@ -19,6 +19,7 @@ requirements = [
 
 test_requirements = [
     'tox',
+    'mock',
 ]
 
 setup(
@@ -42,7 +43,7 @@ setup(
     install_requires=requirements,
     license="ISCL",
     zip_safe=False,
-    keywords='twodolib',
+    keywords='twodolib tool task2do task-management',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
