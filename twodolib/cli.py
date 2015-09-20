@@ -1,3 +1,4 @@
+# coding=utf-8
 """Command line interface to add tasks to 2Doapp."""
 
 from __future__ import print_function, unicode_literals
@@ -85,6 +86,9 @@ def parse_arguments(args):
                    help='If not set (default), apply any default due date / '
                         'time settings in app. Ignore default dates / times, '
                         'if given.')
+    p.add_argument('-e', '--execute', action='store_true',
+                   help='Actually open the URL and add the task instead of'
+                        'showing the URL on stdout.')
     p.add_argument('-v', '--version', action='version', version=version)
     return p.parse_args(args)
 
@@ -93,7 +97,11 @@ def main():
     """Create a task in 2DoApp."""
     args = parse_arguments(sys.argv[1:])
     t = TwoDoTask(**vars(args))
-    print(t.url())
+    if args.execute:
+        import webbrowser
+        webbrowser.open(t.url())
+    else:
+        print(t.url())
 
 
 if __name__ == '__main__':  # pragma: no cover

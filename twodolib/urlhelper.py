@@ -47,8 +47,8 @@ class TwoDoTask(object):
     def __init__(self, task, task_type=TASK_TYPE, for_list=None,
                  for_parent_task=None, note=None, priority=PRIO_NONE,
                  starred=False, tags=None, due=None, dueTime=None, start=None,
-                 repeat=None, action=None, ignoreDefaults=False):
-        """Create a 2DoApp-task."""
+                 repeat=None, action=None, ignoreDefaults=False, **_):
+        """Create a TwoDoTask object."""
         self.task = task
         self.type = task_type
         self.for_list = for_list
