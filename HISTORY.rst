@@ -3,6 +3,12 @@
 History
 -------
 
+0.2.1 (unreleased)
+------------------
+
+* fixed classifier in setup.py
+
+
 0.2.0 (2015-09-20)
 ------------------
 

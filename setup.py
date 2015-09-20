@@ -57,7 +57,6 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
-        'Topic :: Productivity',
         'Topic :: Utilities',
     ],
     test_suite='tests',
