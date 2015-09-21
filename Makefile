@@ -25,7 +25,10 @@ help:
 	@echo "dist - package"
 	@echo "install - install the package to the active Python's site-packages"
 
-clean: clean-build clean-pyc clean-test
+clean: clean-build clean-pyc clean-test clean-doc
+
+clean-doc:
+	$(MAKE) -C docs clean
 
 clean-build:
 	rm -fr build/
@@ -54,9 +57,13 @@ test:
 test-all:
 	tox
 
+cover:
+	coverage run --source=twodolib setup.py test
+	coverage report -m --fail-under=98
+
 coverage:
 	coverage run --source=twodolib setup.py test
-	coverage report -m
+	coverage report -m --fail-under=98
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
