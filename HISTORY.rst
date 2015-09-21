@@ -7,6 +7,7 @@ History
 ------------------
 
 * fixed classifier in setup.py
+* fixed #3 - adding to lists works now.
 
 
 0.2.0 (2015-09-20)
