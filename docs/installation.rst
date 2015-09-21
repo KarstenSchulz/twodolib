@@ -11,6 +11,5 @@ At the command line::
 Or, if you have virtualenvwrapper installed::
 
     $ mkvirtualenv twodolib
-    $ source twodolib/bin/activate
-    $ pip install twodolib
+    (twodolib)$ pip install twodolib
 
