@@ -11,13 +11,13 @@ from . urlhelper import TwoDoTask
 
 usage_description = """\
 Program to create tasks in 2Do. The default behavior is to print the
-generated URL to stdout. Please use the '-g' or '--go'' option, if you want to
-send the task directly to the 2DoApp.
+generated URL to stdout. Please use the '-e' or '--execute'' option, if you
+want to send the task directly to the 2DoApp.
 
 Examples
 ========
 
-Add a task due Tomorrow:
+Add a task due tomorrow:
 task2do -d 1 "Dinner at 8pm."
 
 Add a task with high priority:
@@ -47,49 +47,46 @@ def parse_arguments(args):
     )
     p.add_argument('task', help='Title of the task.')
     p.add_argument('-t', '--type', choices=['0', '1', '2'], dest='task_type',
-                   help='Type of task to create. Following options are '
+                   help='Type of task to create. The following options are '
                         'supported: 0 - Task (default), 1 - Project, '
                         '2 - Checklist', default='0')
     p.add_argument('-l', '--list', metavar='FOR_LIST', dest='for_list',
-                   help='Name of an existing list in app, case-insensitive. '
-                        'Default list or the currently visible list on screen '
-                        'is selected if not used.',
+                   help='Name of an existing list in 2DoApp, '
+                        'case-insensitive. Default list or the currently '
+                        'visible list on screen is selected if not used.',
                    default=None)
     p.add_argument('-n', '--note', help='Notes for the task',
                    default=None)
     p.add_argument('-p', '--priority', choices=['0', '1', '2', '3'],
                    help='priority: 0 (none), 1 (low), 2 (medium), 3 (high)',
                    default='0')
-    p.add_argument('-s', '--starred', help='Task is starred, if given.',
+    p.add_argument('-s', '--starred', help='Mark task as starred.',
                    action='store_true', default=False)
     p.add_argument('--tags', default=None,
                    help='Comma separated list of tags to assign to the task')
     p.add_argument('-d', '--due', default=None,
-                   help='Due Date. Supports two formats: YYYY-MM-DD - Sets on '
+                   help='Due Date. Supports two formats: YYYY-MM-DD - Sets '
                         'the date on default due time (based on your '
-                        'settings, unless due time is specified separately or '
-                        'ignoreDefaults (-i) is given). OR: Any number - '
+                        'settings), unless due time is specified separately '
+                        'or ignoreDefaults (-i) is given). OR: Any number - '
                         'Number of days from Today, starting from 0. e.g. 0 = '
                         'Today, 1 = Tomorrow and so on)')
     p.add_argument('--dueTime', default=None,
-                   help='Due Time. Supports 24h format HH:mm.')
+                   help='Due Time. Supports 24h format hh:mm.')
     p.add_argument('--start', default=None,
                    help='Start Date and time. Supports the format: '
-                        '"YYYY-MM-DD HH:MM" - Sets the start date on the date '
-                        'and time specified - OR - Any number - Number of '
-                        'days from Today, starting from 0. e.g. 0 = Today, '
+                        '"YYYY-MM-DD HH:MM" - Sets the start date to the date '
+                        'and time specified - OR - Any number with 0 = Today, '
                         '1 = Tomorrow and so on)')
     p.add_argument('--repeat', default=None, choices=['1', '2', '3', '4'],
                    help='Repeat task: 1 (daily), 2 (weekly), 3 (bi-weekly), '
                         '4 (monthly))')
     p.add_argument('-i', '--ignoreDefaults', action='store_true',
                    default=False,
-                   help='If not set (default), apply any default due date / '
-                        'time settings in app. Ignore default dates / times, '
-                        'if given.')
+                   help='Ignore default dates / times of 2DoApp if set.')
     p.add_argument('-e', '--execute', action='store_true',
-                   help='Actually open the URL and add the task instead of'
-                        'showing the URL on stdout.')
+                   help='Actually add the task instead of only '
+                        'printing the URL to stdout.')
     p.add_argument('-v', '--version', action='version', version=version)
     return p.parse_args(args)
 
