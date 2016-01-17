@@ -52,6 +52,7 @@ lint:
 	flake8 twodolib tests setup.py
 
 test:
+	flake8 twodolib/
 	python setup.py test
 
 test-all:
