@@ -180,7 +180,7 @@ class TwoDoTask(object):
             try:
                 int(due)
             except ValueError:
-                datetime.strptime(due, '%Y-%m-%d')
+                datetime.strptime(due, '%Y-%m-%d') # check format
             self._due = str(due)
 
     @property
@@ -193,7 +193,7 @@ class TwoDoTask(object):
         # raise ValueError if wrong format (no int, no date)
         self._duetime = None
         if duetime is not None:
-            datetime.strptime(duetime, '%H:%M')
+            datetime.strptime(duetime, '%H:%M') # check format
             self._duetime = str(duetime)
 
     @property
@@ -213,7 +213,7 @@ class TwoDoTask(object):
             try:
                 int(start)
             except ValueError:
-                datetime.strptime(start, '%Y-%m-%d %H:%M')
+                datetime.strptime(start, '%Y-%m-%d %H:%M') # check format
             self._start = str(start)
 
     @property
