@@ -184,6 +184,19 @@ class TwoDoTask(object):
             self._due = str(due)
 
     @property
+    def dueTime(self):
+        """The due date represented as: YYYY-mm-dd or as number of days."""
+        return self._duetime
+
+    @dueTime.setter
+    def dueTime(self, duetime):
+        # raise ValueError if wrong format (no int, no date)
+        self._duetime = None
+        if duetime is not None:
+            datetime.strptime(duetime, '%H:%M')
+            self._duetime = str(duetime)
+
+    @property
     def start(self):
         """The start date and time.
 

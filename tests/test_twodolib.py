@@ -327,13 +327,19 @@ class TestTwoDoTaskValidation(unittest.TestCase):
         wrong_date = '2015......'
         self.assertRaises(ValueError, TwoDoTask, 'TestTask', due=wrong_date)
 
-    @unittest.skip('write this after test: title=None')
     def test_task_with_wrong_duetime_raises_valueerror(self):
         """Wrong formatted due time raises ValueError."""
         task_title = 'Test title of the task.'
         task_duetime = "8pm"
         self.assertRaises(ValueError, TwoDoTask, task_title,
                           dueTime=task_duetime)
+
+    def test_task_with_correct_duetime_is_accepted(self):
+        """Wrong formatted due time raises ValueError."""
+        task_title = 'Test title of the task.'
+        task_duetime = "8:00"
+        t = TwoDoTask(task=task_title, dueTime=task_duetime)
+        self.assertEqual(t.dueTime, '8:00')
 
     def test_wrong_repetition_raises_valueerror(self):
         """Wrong values for repetition raise ValueError."""
