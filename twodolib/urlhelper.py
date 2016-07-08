@@ -22,10 +22,13 @@ showscheduled_url = 'twodo://x-callback-url/showScheduled'
 
 
 def get_add_url(task_title):
-    """Return a url to add the task, represented by the arguments."""
+    """Return a url to add the task, represented by the arguments.
+    :param task_title: The title of the task
+    """
     return TwoDoTask.BASE_URL.format('task=' + quote(task_title))
 
 
+# noinspection PyPep8Naming
 class TwoDoTask(object):
     """Represents all attributes of a task in the 2DoApp."""
 

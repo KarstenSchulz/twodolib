@@ -58,7 +58,7 @@ Features
 * runs with Python 3 and Python 2
 * Create tasks on the command line and show the corresponding URL scheme, for
   copy and pasting it.
-* Create tasks on the command line and open the corresponding URL scheme.
+* Create tasks on the command line and open the corresponding URL scheme to send it to `2DoApp <http://www.2doapp.com>`_
 
 See the documentation at http://twodolib.readthedocs.org/en/latest/
 
