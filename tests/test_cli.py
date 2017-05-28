@@ -3,9 +3,7 @@
 """Tests for `twodolib.cli` module."""
 from __future__ import print_function, unicode_literals
 import unittest
-from mock import patch
 import subprocess
-import sys
 from twodolib import TwoDoTask
 from twodolib import cli
 
@@ -252,37 +250,42 @@ class TestCliGeneratesCorrectTwoDoTaskObject(unittest.TestCase):
         msg = subprocess.check_output(['python', '-m', 'twodolib.cli', 'test'])
         self.assertGreater(len(msg), 0)
 
+    def test_task_gets_action_long(self):
+        """Create a task with an action."""
+        args = "TestTask --action url:https://www.2doapp.com".split()
+        parsed = cli.parse_arguments(args)
+        task = TwoDoTask(**vars(parsed))
+        self.assertEqual(task.task, 'TestTask')
+        self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
+        self.assertIsNone(task.for_list)
+        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.note)
+        self.assertEqual(task.priority, '0')
+        self.assertEqual(task.starred, '0')
+        self.assertIsNone(task.tags)
+        self.assertIsNone(task.due)
+        self.assertIsNone(task.dueTime)
+        self.assertIsNone(task.start)
+        self.assertIsNone(task.repeat)
+        self.assertIsNotNone(task.action)
+        self.assertEqual(task.ignoreDefaults, '0')
 
-class CliCallsWebbrowser(unittest.TestCase):
-    """Make sure, that cli handles the URL correctly."""
-
-    def setUp(self):
-        """Setup args and url for testing."""
-        self.url = 'twodo://x-callback-url/add?task=TestTask'
-
-    @patch('twodolib.cli.webbrowser.open')
-    def test_openwebbrowser_gets_called(self, web_mock):
-        """Call webbrowser, if option ``-e`` is given."""
-        args = "TestTask -e".split()
-        cli.main(args)
-        web_mock.assert_called_with(self.url)
-
-    @patch('twodolib.cli.webbrowser.open')
-    def test_openwebbrowser_gets_called_long_option(self, web_mock):
-        """Call webbrowser, if option ``--execute`` is given."""
-        args = "TestTask --execute".split()
-        cli.main(args)
-        web_mock.assert_called_with(self.url)
-
-    @patch('twodolib.cli.print')
-    def test_print_url_gets_called(self, print_mock):
-        """Print URL, if option ``-e`` is not given."""
-        args = "TestTask".split()
-        cli.main(args)
-        print_mock.assert_called_with(self.url)
-
-    def test_use_sys_args(self):
-        """Use sys.argv and raise if main is called without args."""
-        sys.argv = []
-        with self.assertRaises(SystemExit):
-            cli.main()
+    def test_task_gets_action_short(self):
+        """Create a task with an action."""
+        args = "TestTask -a url:https://www.2doapp.com".split()
+        parsed = cli.parse_arguments(args)
+        task = TwoDoTask(**vars(parsed))
+        self.assertEqual(task.task, 'TestTask')
+        self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
+        self.assertIsNone(task.for_list)
+        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.note)
+        self.assertEqual(task.priority, '0')
+        self.assertEqual(task.starred, '0')
+        self.assertIsNone(task.tags)
+        self.assertIsNone(task.due)
+        self.assertIsNone(task.dueTime)
+        self.assertIsNone(task.start)
+        self.assertIsNone(task.repeat)
+        self.assertIsNotNone(task.action)
+        self.assertEqual(task.ignoreDefaults, '0')

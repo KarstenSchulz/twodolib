@@ -10,9 +10,10 @@ from datetime import datetime
 
 PY3 = sys.version_info > (3,)
 if PY3:
-    # noinspection PyUnresolvedReferences
+    # noinspection PyUnresolvedReferences,PyCompatibility
     from urllib.parse import quote  # pragma: no cover
 else:
+    # noinspection PyUnresolvedReferences
     from urllib import quote
 
 showall_url = 'twodo://x-callback-url/showAll'
@@ -28,7 +29,7 @@ def get_add_url(task_title):
     return TwoDoTask.BASE_URL.format('task=' + quote(task_title))
 
 
-# noinspection PyPep8Naming
+# noinspection PyPep8Naming,PyAttributeOutsideInit
 class TwoDoTask(object):
     """Represents all attributes of a task in the 2DoApp."""
 
@@ -90,6 +91,8 @@ class TwoDoTask(object):
             urlpath += '&start={}'.format(quote(self.start))
         if self.repeat is not None:
             urlpath += '&repeat={}'.format(self.repeat)
+        if self.action is not None:
+            urlpath += '&action={}'.format(quote(self.action))
         return self.BASE_URL.format(urlpath)
 
     @property
@@ -183,7 +186,7 @@ class TwoDoTask(object):
             try:
                 int(due)
             except ValueError:
-                datetime.strptime(due, '%Y-%m-%d') # check format
+                datetime.strptime(due, '%Y-%m-%d')  # check format
             self._due = str(due)
 
     @property
@@ -196,7 +199,7 @@ class TwoDoTask(object):
         # raise ValueError if wrong format (no int, no date)
         self._duetime = None
         if duetime is not None:
-            datetime.strptime(duetime, '%H:%M') # check format
+            datetime.strptime(duetime, '%H:%M')  # check format
             self._duetime = str(duetime)
 
     @property
@@ -216,7 +219,7 @@ class TwoDoTask(object):
             try:
                 int(start)
             except ValueError:
-                datetime.strptime(start, '%Y-%m-%d %H:%M') # check format
+                datetime.strptime(start, '%Y-%m-%d %H:%M')  # check format
             self._start = str(start)
 
     @property
