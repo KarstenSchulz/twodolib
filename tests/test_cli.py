@@ -252,6 +252,46 @@ class TestCliGeneratesCorrectTwoDoTaskObject(unittest.TestCase):
         msg = subprocess.check_output(['python', '-m', 'twodolib.cli', 'test'])
         self.assertGreater(len(msg), 0)
 
+    def test_task_gets_action_long(self):
+        """Create a task with an action."""
+        args = "TestTask --action url:https://www.2doapp.com".split()
+        parsed = cli.parse_arguments(args)
+        task = TwoDoTask(**vars(parsed))
+        self.assertEqual(task.task, 'TestTask')
+        self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
+        self.assertIsNone(task.for_list)
+        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.note)
+        self.assertEqual(task.priority, '0')
+        self.assertEqual(task.starred, '0')
+        self.assertIsNone(task.tags)
+        self.assertIsNone(task.due)
+        self.assertIsNone(task.dueTime)
+        self.assertIsNone(task.start)
+        self.assertIsNone(task.repeat)
+        self.assertIsNotNone(task.action)
+        self.assertEqual(task.ignoreDefaults, '0')
+
+    def test_task_gets_action_short(self):
+        """Create a task with an action."""
+        args = "TestTask -a url:https://www.2doapp.com".split()
+        parsed = cli.parse_arguments(args)
+        task = TwoDoTask(**vars(parsed))
+        self.assertEqual(task.task, 'TestTask')
+        self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
+        self.assertIsNone(task.for_list)
+        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.note)
+        self.assertEqual(task.priority, '0')
+        self.assertEqual(task.starred, '0')
+        self.assertIsNone(task.tags)
+        self.assertIsNone(task.due)
+        self.assertIsNone(task.dueTime)
+        self.assertIsNone(task.start)
+        self.assertIsNone(task.repeat)
+        self.assertIsNotNone(task.action)
+        self.assertEqual(task.ignoreDefaults, '0')
+
 
 class CliCallsWebbrowser(unittest.TestCase):
     """Make sure, that cli handles the URL correctly."""

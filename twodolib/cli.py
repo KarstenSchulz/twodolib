@@ -81,6 +81,9 @@ def parse_arguments(args):
     p.add_argument('--repeat', default=None, choices=['1', '2', '3', '4'],
                    help='Repeat task: 1 (daily), 2 (weekly), 3 (bi-weekly), '
                         '4 (monthly))')
+    p.add_argument('-a', '--action', help='Add an action to the task. Supports '
+                   'url:<url to visit> - Add a Browse action to visit the '
+                   'specified URL address (without angle brackets)')
     p.add_argument('-i', '--ignoreDefaults', action='store_true',
                    default=False,
                    help='Ignore default date / time settings of 2DoApp.')

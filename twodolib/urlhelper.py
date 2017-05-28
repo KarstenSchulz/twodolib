@@ -91,6 +91,8 @@ class TwoDoTask(object):
             urlpath += '&start={}'.format(quote(self.start))
         if self.repeat is not None:
             urlpath += '&repeat={}'.format(self.repeat)
+        if self.action is not None:
+            urlpath += '&action={}'.format(quote(self.action))
         return self.BASE_URL.format(urlpath)
 
     @property
