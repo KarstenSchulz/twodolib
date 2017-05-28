@@ -35,7 +35,7 @@ URL::
 
     twodo://x-callback-url/add?task=Save%20the%20world.
 
-to add this task to your 2Do App.
+to add this task to your 2Do App (see: https://www.2doapp.com/kb/article/url-schemes.html)
 
 The ``task2do`` command supports creating such URLs from the command line.
 To print such an URL for a task without adding it, just enter::
