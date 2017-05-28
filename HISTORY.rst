@@ -3,6 +3,12 @@
 History
 -------
 
+0.3.0 (2017-05-28)
+------------------
+
+* added 'action' property of tasks (e.g. url, phone, ...)
+* switched from webbrowser.open to subprocess.call(['open', ...)
+
 0.2.1 (2015-09-21)
 ------------------
 
