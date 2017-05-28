@@ -4,7 +4,7 @@
 from __future__ import print_function, unicode_literals
 import argparse
 import sys
-import webbrowser
+import subprocess
 
 import twodolib
 from . urlhelper import TwoDoTask
@@ -34,6 +34,24 @@ task2do "Watch EX_MACHINA" --due 0 --dueTime 18:00
 Add a task due tomorrow, with tags, which is also starred and repeated monthly
 task2do "Monthly subscription." --tags bill,payment -s --due 1 --repeat 4
 
+Add a task with an url action (open a link)
+task2do "Read help text" -a url:https://www.2doapp.com/
+task2do "Read help text" --action url:https://www.2doapp.com/
+
+"""
+
+ACTION_HELP_TEXT = """action: Supports the following formats:
+
+call:<number> - Add a Call action to call the specified number
+message:<number> - Add a Message action to message the specified number
+mail:<email> - Add a Email action to email the specified email address
+url:<url to visit> - Add a Browse action to visit the specified URL address
+visit:<address> - Add a Visit action to visit the specified address
+google:<search term> - Add a Google action to search the specified keyword
+
+Use args after colon without angle brackets.
+
+For more details: SEE https://www.2doapp.com/kb/article/url-schemes.html
 """
 
 
@@ -81,9 +99,7 @@ def parse_arguments(args):
     p.add_argument('--repeat', default=None, choices=['1', '2', '3', '4'],
                    help='Repeat task: 1 (daily), 2 (weekly), 3 (bi-weekly), '
                         '4 (monthly))')
-    p.add_argument('-a', '--action', help='Add an action to the task. Supports '
-                   'url:<url to visit> - Add a Browse action to visit the '
-                   'specified URL address (without angle brackets)')
+    p.add_argument('-a', '--action', help=ACTION_HELP_TEXT)
     p.add_argument('-i', '--ignoreDefaults', action='store_true',
                    default=False,
                    help='Ignore default date / time settings of 2DoApp.')
@@ -101,7 +117,7 @@ def main(arguments=None):
     args = parse_arguments(arguments)
     t = TwoDoTask(**vars(args))
     if args.execute:
-        webbrowser.open(t.url())
+        subprocess.call(['open', t.url()])
     else:
         print(t.url())
 
