@@ -73,10 +73,6 @@ Dependencies
 
 * wheel
 
-For testing:
-
-* mock
-
 License
 -------
 

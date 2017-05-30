@@ -19,7 +19,6 @@ requirements = [
 
 test_requirements = [
     'tox',
-    'mock',
 ]
 
 setup(
