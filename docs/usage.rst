@@ -34,15 +34,38 @@ task in your 2Do App::
 
 You'll get help with the ``-h, --help`` option::
 
-    task2do -h
     usage: task2do [-h] [-t {0,1,2}] [-l FOR_LIST] [-n NOTE] [-p {0,1,2,3}] [-s]
-                   [--tags TAGS] [-d DUE] [--dueTime DUETIME] [--start START]
-                   [--repeat {1,2,3,4}] [-i] [-v]
-                   task
+               [--tags TAGS] [-d DUE] [--dueTime DUETIME] [--start START]
+               [--repeat {1,2,3,4}] [-a ACTION] [-i] [-e] [-v]
+               task
 
-    Program to create tasks in 2Do. The default behavior is to print the
-    generated URL to stdout. Please use the '-g' or '--go'' option, if you want to
-    send the task directly to the 2DoApp.
+    Program to create tasks in 2Do. The default behavior is to print the generated
+    URL to stdout. Please use the '-e' or '--execute'' option, if you want to send
+    the task directly to the 2DoApp.
+
+    Examples
+    ========
+
+    Add a task due tomorrow:
+    task2do -d 1 "Dinner at 8pm."
+
+    Add a task with high priority:
+    task2do -p 3 "High priority task."
+    - or -
+    task2do --priority 3 "High priority task."
+
+    Add a task due today and repeated weekly:
+    task2do "change clothes" -d 0 --repeat 2
+
+    Add a task due at 6pm today
+    task2do "Watch EX_MACHINA" --due 0 --dueTime 18:00
+
+    Add a task due tomorrow, with tags, which is also starred and repeated monthly
+    task2do "Monthly subscription." --tags bill,payment -s --due 1 --repeat 4
+
+    Add a task with an url action (open a link)
+    task2do "Read help text" -a url:https://www.2doapp.com/
+    task2do "Read help text" --action url:https://www.2doapp.com/
 
     positional arguments:
       task                  Title of the task.
@@ -50,37 +73,47 @@ You'll get help with the ``-h, --help`` option::
     optional arguments:
       -h, --help            show this help message and exit
       -t {0,1,2}, --type {0,1,2}
-                            Type of task to create. Following options are
+                            Type of task to create. The following options are
                             supported: 0 - Task (default), 1 - Project, 2 -
                             Checklist
       -l FOR_LIST, --list FOR_LIST
-                            Name of an existing list in app, case-insensitive.
-                            Default list or the currently visible list on screen
-                            is selected if not used.
+                            Name of an existing list in 2DoApp, case-insensitive.
+                            If missing, the default list or the currently visible
+                            list on screen is used.
       -n NOTE, --note NOTE  Notes for the task
       -p {0,1,2,3}, --priority {0,1,2,3}
                             priority: 0 (none), 1 (low), 2 (medium), 3 (high)
-      -s, --starred         Task is starred, if given.
+      -s, --starred         Mark task as starred.
       --tags TAGS           Comma separated list of tags to assign to the task
-      -d DUE, --due DUE     Due Date. Supports two formats: YYYY-MM-DD - Sets on
-                            the date on default due time (based on your settings,
+      -d DUE, --due DUE     Due date. Supports two formats: YYYY-MM-DD - Sets the
+                            date on default due time (based on your settings),
                             unless due time is specified separately or
-                            ignoreDefaults (-i) is given). OR: Any number - Number
-                            of days from Today, starting from 0. e.g. 0 = Today, 1
-                            = Tomorrow and so on)
-      --dueTime DUETIME     Due Time. Supports 24h format HH:mm.
-      --start START         Start Date and time. Supports the format: "YYYY-MM-DD
-                            HH:MM" - Sets the start date on the date and time
-                            specified - OR - Any number - Number of days from
-                            Today, starting from 0. e.g. 0 = Today, 1 = Tomorrow
-                            and so on)
+                            ignoreDefaults (-i) is given. OR: Number of days due
+                            from today. Which means: 0 = today, 1 = tomorrow and
+                            so on)
+      --dueTime DUETIME     Due time. Supports 24h format HH:MM.
+      --start START         Start date and time. Supports the format: "YYYY-MM-DD
+                            HH:MM" - Sets the start date to the date and time
+                            specified - OR - Any number with 0 = today, 1 =
+                            tomorrow and so on)
       --repeat {1,2,3,4}    Repeat task: 1 (daily), 2 (weekly), 3 (bi-weekly), 4
                             (monthly))
-      -i, --ignoreDefaults  If not set (default), apply any default due date /
-                            time settings in app. Ignore default dates / times, if
-                            given.
+      -a ACTION, --action ACTION
+                            action: Supports the following formats: call:<number>
+                            - Add a Call action to call the specified number
+                            message:<number> - Add a Message action to message the
+                            specified number mail:<email> - Add a Email action to
+                            email the specified email address url:<url to visit> -
+                            Add a Browse action to visit the specified URL address
+                            visit:<address> - Add a Visit action to visit the
+                            specified address google:<search term> - Add a Google
+                            action to search the specified keyword Use args after
+                            colon without angle brackets. For more details: SEE
+                            https://www.2doapp.com/kb/article/url-schemes.html
+      -i, --ignoreDefaults  Ignore default date / time settings of 2DoApp.
+      -e, --execute         Actually add the task instead of only printing the URL
+                            to stdout.
       -v, --version         show program's version number and exit
-
 
 Examples
 --------

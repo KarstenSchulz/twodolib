@@ -4,22 +4,22 @@ twodolib - A commandline helper to add tasks to 2DoApp
 
 
 .. image:: https://img.shields.io/github/release/KarstenSchulz/twodolib.svg
-        :target: https://github.com/KarstenSchulz/twodolib/releases
+    :target: https://github.com/KarstenSchulz/twodolib/releases
 
 .. image:: https://img.shields.io/travis/KarstenSchulz/twodolib.svg
-        :target: https://travis-ci.org/KarstenSchulz/twodolib
+    :target: https://travis-ci.org/KarstenSchulz/twodolib
 
 .. image:: https://img.shields.io/coveralls/KarstenSchulz/twodolib.svg
-        :target: https://coveralls.io/github/KarstenSchulz/twodolib?branch=master
+    :target: https://coveralls.io/github/KarstenSchulz/twodolib?branch=master
 
 .. image:: https://img.shields.io/requires/github/KarstenSchulz/twodolib.svg
-        :target: https://requires.io/github/KarstenSchulz/twodolib/requirements/?branch=master
+    :target: https://requires.io/github/KarstenSchulz/twodolib/requirements/?branch=master
 
 .. image:: https://img.shields.io/pypi/v/twodolib.svg
-        :target: https://pypi.python.org/pypi/twodolib
+    :target: https://pypi.python.org/pypi/twodolib
 
 .. image:: https://img.shields.io/github/license/KarstenSchulz/twodolib.svg
-        :target: https://opensource.org/licenses/ISC
+    :target: https://opensource.org/licenses/ISC
 
 
 Description
