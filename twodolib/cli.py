@@ -43,13 +43,14 @@ task2do "Read help text" --action url:https://www.2doapp.com/
 ACTION_HELP_TEXT = """action: Supports the following formats:
 
 call:<number> - Add a Call action to call the specified number
-message:<number> - Add a Message action to message the specified number
-mail:<email> - Add a Email action to email the specified email address
+message:<number> - Add a Message action to send a message to the specified 
+                   number
+mail:<email> - Add a Email action to send an email the specified email address
 url:<url to visit> - Add a Browse action to visit the specified URL address
-visit:<address> - Add a Visit action to visit the specified address
+visit:<address> - Add a Visit action to visit the specified location
 google:<search term> - Add a Google action to search the specified keyword
 
-Use args after colon without angle brackets.
+Enter the arguments after the colon without the angle brackets.
 
 For more details: SEE https://www.2doapp.com/kb/article/url-schemes.html
 """
