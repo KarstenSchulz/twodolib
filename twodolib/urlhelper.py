@@ -26,14 +26,15 @@ def get_add_url(task_title):
     """Return a url to add the task, represented by the arguments.
     :param task_title: The title of the task
     """
-    return TwoDoTask.BASE_URL.format('task=' + quote(task_title))
+    return TwoDoTask.ADD_URL.format('task=' + quote(task_title))
 
 
 # noinspection PyPep8Naming,PyAttributeOutsideInit
 class TwoDoTask(object):
     """Represents all attributes of a task in the 2DoApp."""
 
-    BASE_URL = 'twodo://x-callback-url/add?{}'
+    ADD_URL = 'twodo://x-callback-url/add?{}'
+    PASTE_URL = 'twodo://x-callback-url/paste?{}'
     TASK_TYPE = '0'
     PROJECT_TYPE = '1'
     CHECKLIST_TYPE = '2'
@@ -49,13 +50,15 @@ class TwoDoTask(object):
     MONTHLY = '4'
 
     def __init__(self, task, task_type=TASK_TYPE, for_list=None,
-                 for_parent_task=None, note=None, priority=PRIO_NONE,
-                 starred=False, tags=None, due=None, dueTime=None, start=None,
-                 repeat=None, action=None, ignoreDefaults=False, **_):
+                 in_project=None, for_parent_task=None, note=None,
+                 priority=PRIO_NONE, starred=False, tags=None, due=None,
+                 dueTime=None, start=None, repeat=None, action=None,
+                 ignoreDefaults=False, **_):
         """Create a TwoDoTask object."""
         self.task = task
         self.type = task_type
         self.for_list = for_list
+        self.in_project = in_project
         self.forParentTask = for_parent_task
         self.note = note
         self.priority = priority
@@ -70,30 +73,39 @@ class TwoDoTask(object):
 
     def url(self):
         """Return the URL for the task of this object."""
-        urlpath = 'task=' + quote(self.task)
-        if self.type != self.TASK_TYPE:
-            urlpath += '&type={}'.format(self.type)
-        if self.for_list is not None:
-            urlpath += '&forlist={}'.format(quote(self.for_list))
-        if self.note is not None:
-            urlpath += '&note={}'.format(quote(self.note))
-        if self.priority != self.PRIO_NONE:
-            urlpath += '&priority={}'.format(self.priority)
-        if self.starred == '1':
-            urlpath += '&starred=1'
-        if self.tags is not None:
-            urlpath += '&tags={}'.format(quote(self.tags))
-        if self.due is not None:
-            urlpath += '&due={}'.format(quote(self.due))
-        if self.dueTime is not None:
-            urlpath += '&dueTime={}'.format(quote(self.dueTime))
-        if self.start is not None:
-            urlpath += '&start={}'.format(quote(self.start))
-        if self.repeat is not None:
-            urlpath += '&repeat={}'.format(self.repeat)
-        if self.action is not None:
-            urlpath += '&action={}'.format(quote(self.action))
-        return self.BASE_URL.format(urlpath)
+        if self.in_project is None:
+            urlpath = 'task=' + quote(self.task)
+            if self.type != self.TASK_TYPE:
+                urlpath += '&type={}'.format(self.type)
+            if self.for_list is not None:
+                urlpath += '&forlist={}'.format(quote(self.for_list))
+            if self.note is not None:
+                urlpath += '&note={}'.format(quote(self.note))
+            if self.priority != self.PRIO_NONE:
+                urlpath += '&priority={}'.format(self.priority)
+            if self.starred == '1':
+                urlpath += '&starred=1'
+            if self.tags is not None:
+                urlpath += '&tags={}'.format(quote(self.tags))
+            if self.due is not None:
+                urlpath += '&due={}'.format(quote(self.due))
+            if self.dueTime is not None:
+                urlpath += '&dueTime={}'.format(quote(self.dueTime))
+            if self.start is not None:
+                urlpath += '&start={}'.format(quote(self.start))
+            if self.repeat is not None:
+                urlpath += '&repeat={}'.format(self.repeat)
+            if self.action is not None:
+                urlpath += '&action={}'.format(quote(self.action))
+            return self.ADD_URL.format(urlpath)
+        else:
+            """Do not add a task, but paste it into the project."""
+            urlpath = 'text=' + quote(self.task)
+            if self.for_list is not None:
+                urlpath += '&forList={}'.format(quote(self.for_list))
+            if self.in_project is not None:
+                urlpath += '&inProject={}'.format(quote(self.in_project))
+            return self.PASTE_URL.format(urlpath)
 
     @property
     def task(self):
@@ -158,10 +170,7 @@ class TwoDoTask(object):
 
     @starred.setter
     def starred(self, starred):
-        """Determine the value for self._starred.
-
-        for starred in [True, '1', 1]
-        """
+        """Determine the value for self._starred."""
         self._starred = '1' if starred in [True, '1', 1] else '0'
 
     @property
@@ -189,7 +198,6 @@ class TwoDoTask(object):
             self._due = str(due)
         else:
             self._due = None
-
 
     @property
     def dueTime(self):

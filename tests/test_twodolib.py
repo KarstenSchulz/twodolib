@@ -221,6 +221,20 @@ class TestGeneratedUrlsOfTwoDoTask(unittest.TestCase):
         task = TwoDoTask(task_title, repeat='1')
         self.assertEqual(task.url(), expected_url)
 
+    def test_task_add_to_project_is_correct(self):
+        """The URL for pasting a task to a project is correct."""
+        task_title = 'Buy milk.'
+        in_list = "personal"
+        quoted_in_list = quote(in_list)
+        in_project = "errands"
+        quoted_in_project = quote(in_project)
+        quoted_title = quote(task_title)
+        expected_url = 'twodo://x-callback-url/paste?text=' + quoted_title
+        expected_url += '&forList=' + quoted_in_list
+        expected_url += '&inProject=' + quoted_in_project
+        task = TwoDoTask(task_title, for_list=in_list, in_project=in_project)
+        self.assertEqual(task.url(), expected_url)
+
 
 class TestTwoDoTaskValidation(unittest.TestCase):
     """Test the validation of arguments, when creating a TwoDoTask object."""
