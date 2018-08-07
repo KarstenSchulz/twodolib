@@ -38,6 +38,8 @@ Add a task with an url action (open a link)
 task2do "Read help text" -a url:https://www.2doapp.com/
 task2do "Read help text" --action url:https://www.2doapp.com/
 
+Add a Subtask in list personal in project errands:
+task2do "Buy milk." -l personal --project errands
 """
 
 ACTION_HELP_TEXT = """action: Supports the following formats:
@@ -76,7 +78,7 @@ def parse_arguments(args):
                    default=None)
     p.add_argument('--project', metavar='IN_PROJECT', dest='in_project',
                    help='Name of an existing project in 2DoApp, into which the'
-                        'task will be pasted. You create subtasks with this.',
+                        ' task will be pasted. So you can create subtasks.',
                    default=None)
     p.add_argument('-n', '--note', help='Notes for the task',
                    default=None)

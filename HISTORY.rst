@@ -3,6 +3,12 @@
 History
 -------
 
+0.4.0 (2018-08-07)
+------------------
+
+* you can paste tasks now, even as subtasks of a project. See help or docs!
+* minor fixes
+
 0.3.0 (2017-05-28)
 ------------------
 
