@@ -189,7 +189,7 @@ class TwoDoTask(object):
             self._due = str(due)
         else:
             self._due = None
-            
+
 
     @property
     def dueTime(self):
@@ -199,10 +199,11 @@ class TwoDoTask(object):
     @dueTime.setter
     def dueTime(self, duetime):
         # raise ValueError if wrong format (no int, no date)
-        self._duetime = None
         if duetime is not None:
             datetime.strptime(duetime, '%H:%M')  # check format
             self._duetime = str(duetime)
+        else:
+            self._duetime = None
 
     @property
     def start(self):
