@@ -181,13 +181,15 @@ class TwoDoTask(object):
     @due.setter
     def due(self, due):
         # raise ValueError if wrong format (no int, no date)
-        self._due = None
         if due is not None:
             try:
                 int(due)
             except ValueError:
                 datetime.strptime(due, '%Y-%m-%d')  # check format
             self._due = str(due)
+        else:
+            self._due = None
+            
 
     @property
     def dueTime(self):
