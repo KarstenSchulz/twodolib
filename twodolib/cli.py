@@ -74,6 +74,10 @@ def parse_arguments(args):
                         'case-insensitive. If missing, the default list or the '
                         'currently visible list on screen is used.',
                    default=None)
+    p.add_argument('--project', metavar='IN_PROJECT', dest='in_project',
+                   help='Name of an existing project in 2DoApp, into which the'
+                        'task will be pasted. You create subtasks with this.',
+                   default=None)
     p.add_argument('-n', '--note', help='Notes for the task',
                    default=None)
     p.add_argument('-p', '--priority', choices=['0', '1', '2', '3'],

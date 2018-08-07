@@ -230,8 +230,8 @@ class TestGeneratedUrlsOfTwoDoTask(unittest.TestCase):
         quoted_in_project = quote(in_project)
         quoted_title = quote(task_title)
         expected_url = 'twodo://x-callback-url/paste?text=' + quoted_title
-        expected_url += '&forList=' + quoted_in_list
         expected_url += '&inProject=' + quoted_in_project
+        expected_url += '&forList=' + quoted_in_list
         task = TwoDoTask(task_title, for_list=in_list, in_project=in_project)
         self.assertEqual(task.url(), expected_url)
 
@@ -256,6 +256,11 @@ class TestTwoDoTaskValidation(unittest.TestCase):
     def test_wrong_priority_raises_valueerror(self):
         """Create Task with Type invalid priority raises ValueError."""
         self.assertRaises(ValueError, TwoDoTask, 'TestTask', priority='4')
+
+    def test_project_without_list_raises_valueerror(self):
+        """A task can only be pasted into a project if a list is given."""
+        task = TwoDoTask('TestTask', in_project='X')
+        self.assertRaises(ValueError, task.url)
 
     def test_starred_true_returns_1_value(self):
         """A True starred will be represented as '1'."""

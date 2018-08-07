@@ -46,6 +46,13 @@ class TestCliParseArguments(unittest.TestCase):
         parsed = cli.parse_arguments(args)
         self.assertEqual(parsed.for_list, 'business')
 
+    def test_set_project_name(self):
+        """A task can be a subtask in a project."""
+        args = "TestTask -l business --project webpage".split()
+        parsed = cli.parse_arguments(args)
+        self.assertEqual(parsed.for_list, 'business')
+        self.assertEqual(parsed.in_project, 'webpage')
+
     def test_set_list_name_long_option(self):
         """A task can belong to a list: --list listname."""
         args = "TestTask --list business".split()

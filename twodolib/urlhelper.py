@@ -101,10 +101,13 @@ class TwoDoTask(object):
         else:
             """Do not add a task, but paste it into the project."""
             urlpath = 'text=' + quote(self.task)
-            if self.for_list is not None:
-                urlpath += '&forList={}'.format(quote(self.for_list))
             if self.in_project is not None:
                 urlpath += '&inProject={}'.format(quote(self.in_project))
+            if self.for_list is not None:
+                urlpath += '&forList={}'.format(quote(self.for_list))
+            else:
+                """if a project is given, a list must be given, too."""
+                raise ValueError('Pasting to a project needs also a list!')
             return self.PASTE_URL.format(urlpath)
 
     @property
