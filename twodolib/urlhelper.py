@@ -4,17 +4,8 @@ Module to generate URLs to manage tasks, checlists and projects in 2DoApp.
 see http://www.2doapp.com
 
 """
-from __future__ import unicode_literals
-import sys
 from datetime import datetime
-
-PY3 = sys.version_info > (3,)
-if PY3:
-    # noinspection PyUnresolvedReferences,PyCompatibility
-    from urllib.parse import quote  # pragma: no cover
-else:
-    # noinspection PyUnresolvedReferences
-    from urllib import quote
+from urllib.parse import quote
 
 showall_url = 'twodo://x-callback-url/showAll'
 showtoday_url = 'twodo://x-callback-url/showToday'

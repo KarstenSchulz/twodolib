@@ -55,7 +55,7 @@ If you want to actually add the task to your 2Do App, use the ``-e`` or
 Features
 --------
 
-* runs with Python 3 and Python 2
+* runs with Python 3 (if you need py27 support please use release `0.4.0 <https://github.com/KarstenSchulz/twodolib/releases/tag/0.4.1>`_)
 * Create tasks on the command line and show the corresponding URL scheme, for copy and pasting it.
 * Create tasks on the command line and open the corresponding URL scheme to send it to `2DoApp <http://www.2doapp.com>`_
 

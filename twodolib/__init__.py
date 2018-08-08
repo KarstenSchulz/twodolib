@@ -1,5 +1,4 @@
 """Modules and functions to add tasks from the commandline to the 2Do App."""
-from __future__ import unicode_literals
 
 __version__ = '0.4.1'
 

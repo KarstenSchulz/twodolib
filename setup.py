@@ -13,13 +13,7 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read().replace('.. :changelog:', '')
 
-requirements = [
-    'wheel',
-]
-
-test_requirements = [
-    'tox',
-]
+test_requirements = ['tox', ]
 
 setup(
     name='twodolib',
@@ -39,19 +33,18 @@ setup(
             'task2do = twodolib.cli:main'
         ]
     },
-    install_requires=requirements,
+    # install_requires=requirements,
     license="ISCL",
     zip_safe=False,
     keywords='twodolib tool task2do task-management',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Environment :: MacOS X',
         'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: ISC License (ISCL)',
         'Natural Language :: English',
         'Operating System :: MacOS :: MacOS X',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Topic :: Utilities',

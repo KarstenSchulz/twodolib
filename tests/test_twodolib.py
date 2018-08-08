@@ -1,19 +1,11 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `twodolib` module."""
-from __future__ import print_function, unicode_literals
 import unittest
-import sys
+from urllib.parse import quote
 
 import twodolib
 from twodolib import TwoDoTask
-
-PY3 = sys.version_info > (3,)
-if PY3:
-    # noinspection PyUnresolvedReferences
-    from urllib.parse import quote
-else:
-    from urllib import quote
 
 
 class TestShowUrls(unittest.TestCase):

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `twodolib.cli` module."""
-from __future__ import print_function, unicode_literals
 import unittest
 import subprocess
 from twodolib import TwoDoTask
