@@ -113,7 +113,7 @@ def parse_arguments(args):
     p.add_argument('--tags', default=None,
                    help='Comma separated list of tags to assign to the task')
     p.add_argument('--taskid', default=None, action='store_true',
-                   help='Prints taskid, need a task titel an a list.')
+                   help='Prints taskid, needs the task title and the list.')
     p.add_argument('-v', '--version', action='version', version=version)
     return p.parse_args(args)
 
@@ -135,7 +135,8 @@ def main(arguments=None):
             else:
                 print("No task found!")
         else:
-            print('Please also provide a list!')
+            print('Please also provide the list '
+                  'of the task you are looking for!')
     else:
         print(t.url())
 
