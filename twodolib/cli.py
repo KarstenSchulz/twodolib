@@ -66,28 +66,7 @@ def parse_arguments(args):
         description=usage_description,
     )
     p.add_argument('task', help='Title of the task.')
-    p.add_argument('-t', '--type', choices=['0', '1', '2'], dest='task_type',
-                   help='Type of task to create. The following options are '
-                        'supported: 0 - Task (default), 1 - Project, '
-                        '2 - Checklist', default='0')
-    p.add_argument('-l', '--list', metavar='FOR_LIST', dest='for_list',
-                   help='Name of an existing list in 2DoApp, '
-                        'case-insensitive. If missing, the default list or the '
-                        'currently visible list on screen is used.',
-                   default=None)
-    p.add_argument('--project', metavar='IN_PROJECT', dest='in_project',
-                   help='Name of an existing project in 2DoApp, into which the'
-                        ' task will be pasted. So you can create subtasks.',
-                   default=None)
-    p.add_argument('-n', '--note', help='Notes for the task',
-                   default=None)
-    p.add_argument('-p', '--priority', choices=['0', '1', '2', '3'],
-                   help='priority: 0 (none), 1 (low), 2 (medium), 3 (high)',
-                   default='0')
-    p.add_argument('-s', '--starred', help='Mark task as starred.',
-                   action='store_true', default=False)
-    p.add_argument('--tags', default=None,
-                   help='Comma separated list of tags to assign to the task')
+    p.add_argument('-a', '--action', help=ACTION_HELP_TEXT)
     p.add_argument('-d', '--due', default=None,
                    help='Due date. Supports two formats: YYYY-MM-DD - Sets '
                         'the date on default due time (based on your '
@@ -97,21 +76,44 @@ def parse_arguments(args):
                         'today, 1 = tomorrow and so on)')
     p.add_argument('--dueTime', default=None,
                    help='Due time. Supports 24h format HH:MM.')
+    p.add_argument('-e', '--execute', action='store_true',
+                   help='Actually add the task instead of only '
+                        'printing the URL to stdout.')
+    p.add_argument('-i', '--ignoreDefaults', action='store_true',
+                   default=False,
+                   help='Ignore default date / time settings of 2DoApp.')
+    p.add_argument('-l', '--list', metavar='FOR_LIST', dest='for_list',
+                   help='Name of an existing list in 2DoApp, '
+                        'case-insensitive. If missing, the default list or the '
+                        'currently visible list on screen is used.',
+                   default=None)
+    p.add_argument('-n', '--note', help='Notes for the task',
+                   default=None)
+    p.add_argument('-p', '--priority', choices=['0', '1', '2', '3'],
+                   help='priority: 0 (none), 1 (low), 2 (medium), 3 (high)',
+                   default='0')
+    p.add_argument('--project', metavar='IN_PROJECT', dest='in_project',
+                   help='Name of an existing project in 2DoApp, into which the'
+                        ' task will be pasted. So you can create subtasks.',
+                   default=None)
+    p.add_argument('--repeat', default=None, choices=['1', '2', '3', '4'],
+                   help='Repeat task: 1 (daily), 2 (weekly), 3 (bi-weekly), '
+                        '4 (monthly))')
+    p.add_argument('-s', '--starred', help='Mark task as starred.',
+                   action='store_true', default=False)
     p.add_argument('--start', default=None,
                    help='Start date and time. Supports the format: '
                         '"YYYY-MM-DD HH:MM" - Sets the start date to the date '
                         'and time specified - OR - Any number with 0 = today, '
                         '1 = tomorrow and so on)')
-    p.add_argument('--repeat', default=None, choices=['1', '2', '3', '4'],
-                   help='Repeat task: 1 (daily), 2 (weekly), 3 (bi-weekly), '
-                        '4 (monthly))')
-    p.add_argument('-a', '--action', help=ACTION_HELP_TEXT)
-    p.add_argument('-i', '--ignoreDefaults', action='store_true',
-                   default=False,
-                   help='Ignore default date / time settings of 2DoApp.')
-    p.add_argument('-e', '--execute', action='store_true',
-                   help='Actually add the task instead of only '
-                        'printing the URL to stdout.')
+    p.add_argument('-t', '--type', choices=['0', '1', '2'], dest='task_type',
+                   help='Type of task to create. The following options are '
+                        'supported: 0 - Task (default), 1 - Project, '
+                        '2 - Checklist', default='0')
+    p.add_argument('--tags', default=None,
+                   help='Comma separated list of tags to assign to the task')
+    p.add_argument('--taskid', default=None, action='store_true',
+                   help='Prints taskid, need a task titel an a list.')
     p.add_argument('-v', '--version', action='version', version=version)
     return p.parse_args(args)
 
@@ -125,6 +127,15 @@ def main(arguments=None):
     t = TwoDoTask(**vars(args))
     if args.execute:
         subprocess.call(['open', t.url()])
+    elif args.taskid:
+        if t.for_list:
+            taskid = t.get_taskid()
+            if taskid:
+                print(taskid)
+            else:
+                print("No task found!")
+        else:
+            print('Please also provide a list!')
     else:
         print(t.url())
 

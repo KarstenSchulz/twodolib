@@ -114,6 +114,12 @@ class TestCliParseArguments(unittest.TestCase):
         parsed = cli.parse_arguments(args)
         self.assertEqual(parsed.tags, "business,customer,important")
 
+    def test_get_taskid(self):
+        """Print the task id"""
+        args = "TestTask --taskid -l mylist".split()
+        parsed = cli.parse_arguments(args)
+        self.assertEqual(parsed.taskid, True)
+
     def test_set_due_date_isoformat(self):
         """Set the tasks due date: -d YYYY-MM-DD."""
         args = "TestTask -d 2015-09-10".split()

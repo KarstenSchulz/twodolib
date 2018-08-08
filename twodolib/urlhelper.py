@@ -266,8 +266,10 @@ class TwoDoTask(object):
         return url
 
     def get_taskid(self):
+        checkmark = "no task id"
+        pbcopy(checkmark)
         subprocess.call(['open', self.get_taskid_url()])
         taskid = pbpaste()
-        if len(taskid) != 32:  # only a quick, insufficient test!
+        if taskid == checkmark:
             return False
         return taskid
