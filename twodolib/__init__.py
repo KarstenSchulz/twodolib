@@ -1,6 +1,6 @@
 """Modules and functions to add tasks from the commandline to the 2Do App."""
 
-__version__ = '0.4.1'
+__version__ = '0.5.0'
 
 from .urlhelper import showall_url  # noqa
 from .urlhelper import showtoday_url  # noqa
