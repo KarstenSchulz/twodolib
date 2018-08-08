@@ -1,5 +1,7 @@
 # Config file for automatic testing at travis-ci.org
 
+os: osx
+
 language: python
 
 python:
