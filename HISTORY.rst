@@ -7,7 +7,8 @@ History
 -----
 
 * dropping Python 2.7 support
-
+* implemented ``forParentName``
+* print taskid
 
 0.4.0 (2018-08-07)
 ------------------
