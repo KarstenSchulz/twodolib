@@ -5,7 +5,7 @@ import unittest
 from urllib.parse import quote
 
 import twodolib
-from twodolib import TwoDoTask
+from twodolib import TwoDoTask, pbcopy, pbpaste
 
 
 class TestShowUrls(unittest.TestCase):
@@ -30,17 +30,6 @@ class TestShowUrls(unittest.TestCase):
         """URL showscheduled is correct."""
         expected_url = 'twodo://x-callback-url/showScheduled'
         self.assertEqual(twodolib.showscheduled_url, expected_url)
-
-
-class TestGetSimpleAddUrl(unittest.TestCase):
-    """Test url for adding tasks to 2Do App."""
-
-    def test_add_task_with_title_url(self):
-        """Test adding a task only with a title."""
-        task_title = 'Test title of the task.'
-        quoted_title = quote(task_title)
-        expected_url = 'twodo://x-callback-url/add?task=' + quoted_title
-        self.assertEqual(twodolib.get_add_url(task_title), expected_url)
 
 
 class TestTwoDoTaskClass(unittest.TestCase):
@@ -69,6 +58,41 @@ class TestTwoDoTaskClass(unittest.TestCase):
         self.assertIsNone(task.repeat)
         self.assertIsNone(task.action)
         self.assertEqual(task.ignoreDefaults, '0')
+
+
+class TestMiscFunctionality(unittest.TestCase):
+    """Test miscellaneous functions. """
+
+    def test_method_get_taskid_url_exists(self):
+        """Call the method to check if it is there."""
+        task_title = 'Test title of the task.'
+        task_list = 'errands'
+        task = TwoDoTask(task_title, for_list=task_list)
+        self.assertIsNotNone(task.get_taskid_url())
+
+    def test_get_taskid_url_is_correct(self):
+        """Test retrieval of a task id url."""
+        task_title = 'Testtask'
+        task_list = 'mylist'
+        task = TwoDoTask(task_title, for_list=task_list)
+        expected_url = ('twodo://x-callback-url/getTaskID?task=Testtask&'
+                        'forList=mylist&saveInClipboard=1')
+        self.assertEqual(task.get_taskid_url(), expected_url)
+
+    def test_get_non_existing_taskid_returns_false(self):
+        """Test retrieval of a non existing task id gives 'False'."""
+        task_title = 'This task won\'t exist. AxTT6%gB77U Testtask'
+        task_list = 'this list neither, so we do not get an ID!'
+        task = TwoDoTask(task_title, for_list=task_list)
+        self.assertEqual(task.get_taskid(), False)
+
+    def test_copy_and_paste(self):
+        """Copy text to clipboard and retrieve it."""
+        text = "Hello MacOS clipboard!"
+        message = ""
+        pbcopy(text)
+        message = pbpaste()
+        self.assertEqual(text, message)
 
 
 class TestGeneratedUrlsOfTwoDoTask(unittest.TestCase):

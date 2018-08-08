@@ -4,7 +4,9 @@ Module to generate URLs to manage tasks, checlists and projects in 2DoApp.
 see http://www.2doapp.com
 
 """
+import subprocess
 from datetime import datetime
+from subprocess import Popen, PIPE
 from urllib.parse import quote
 
 showall_url = 'twodo://x-callback-url/showAll'
@@ -13,11 +15,16 @@ showstarred_url = 'twodo://x-callback-url/showStarred'
 showscheduled_url = 'twodo://x-callback-url/showScheduled'
 
 
-def get_add_url(task_title):
-    """Return a url to add the task, represented by the arguments.
-    :param task_title: The title of the task
-    """
-    return TwoDoTask.ADD_URL.format('task=' + quote(task_title))
+def pbcopy(text):
+    text = str(text)
+    p = Popen(['pbcopy', 'w'], stdin=PIPE)
+    p.communicate(input=bytes(text, 'utf-8'))
+
+
+def pbpaste():
+    p = Popen(['pbpaste', 'r'], stdout=PIPE)
+    stdout, stderr = p.communicate()
+    return bytes.decode(stdout)
 
 
 # noinspection PyPep8Naming,PyAttributeOutsideInit
@@ -246,3 +253,21 @@ class TwoDoTask(object):
                              self.MONTHLY, repeat)
             raise ValueError(msg)
         self._repeat = repeat
+
+    def get_taskid_url(self):
+        """Return the url to retrieve TaskID of a task in a list."""
+        url = 'twodo://x-callback-url/getTaskID?task='
+        url += quote(self.task)
+        if self.for_list is not None:
+            url += '&forList={}'.format(quote(self.for_list))
+            url += '&saveInClipboard=1'
+        else:
+            raise ValueError("To retrieve a task id we need a list!")
+        return url
+
+    def get_taskid(self):
+        subprocess.call(['open', self.get_taskid_url()])
+        taskid = pbpaste()
+        if len(taskid) != 32:  # only a quick, insufficient test!
+            return False
+        return taskid

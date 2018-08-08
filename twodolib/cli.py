@@ -118,6 +118,7 @@ def parse_arguments(args):
 
 def main(arguments=None):
     """Create a task in 2DoApp."""
+    # FIXME: correct usage of arguments and sys.argv??
     if arguments is None:
         arguments = sys.argv[1:]
     args = parse_arguments(arguments)
