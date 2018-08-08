@@ -48,16 +48,17 @@ class TwoDoTask(object):
     MONTHLY = '4'
 
     def __init__(self, task, task_type=TASK_TYPE, for_list=None,
-                 in_project=None, for_parent_task=None, note=None,
-                 priority=PRIO_NONE, starred=False, tags=None, due=None,
-                 dueTime=None, start=None, repeat=None, action=None,
-                 ignoreDefaults=False, **_):
+                 in_project=None, for_parent_name=None, note=None,
+                 priority=PRIO_NONE, starred=False,
+                 tags=None, due=None, dueTime=None, start=None, repeat=None,
+                 action=None, ignoreDefaults=False, **_):
         """Create a TwoDoTask object."""
         self.task = task
         self.type = task_type
         self.for_list = for_list
         self.in_project = in_project
-        self.forParentTask = for_parent_task
+        self.forParentName = for_parent_name
+        self.taskid = None
         self.note = note
         self.priority = priority
         self.starred = starred
@@ -95,6 +96,8 @@ class TwoDoTask(object):
                 urlpath += '&repeat={}'.format(self.repeat)
             if self.action is not None:
                 urlpath += '&action={}'.format(quote(self.action))
+            if self.forParentName is not None:
+                urlpath += '&forParentName={}'.format(quote(self.forParentName))
             return self.ADD_URL.format(urlpath)
         else:
             """Do not add a task, but paste it into the project."""

@@ -126,6 +126,12 @@ class TestCliParseArguments(unittest.TestCase):
         parsed = cli.parse_arguments(args)
         self.assertEqual(parsed.due, "2015-09-10")
 
+    def test_use_parenttask(self):
+        """Set the parent task of a subtask"""
+        args = "SubTask -f Parenttask -l mylist".split()
+        parsed = cli.parse_arguments(args)
+        self.assertEqual(parsed.for_parent_name, "Parenttask")
+
     def test_set_due_date_isoformat_long_option(self):
         """Set the tasks due date: --due YYYY-MM-DD."""
         args = "TestTask --due 2015-09-10".split()
@@ -209,7 +215,7 @@ class TestCliGeneratesCorrectTwoDoTaskObject(unittest.TestCase):
         self.assertEqual(task.task, 'TestTask')
         self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
         self.assertIsNone(task.for_list)
-        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.forParentName)
         self.assertIsNone(task.note)
         self.assertEqual(task.priority, '0')
         self.assertEqual(task.starred, '0')
@@ -229,7 +235,7 @@ class TestCliGeneratesCorrectTwoDoTaskObject(unittest.TestCase):
         self.assertEqual(task.task, 'TestTask')
         self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
         self.assertIsNone(task.for_list)
-        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.forParentName)
         self.assertIsNone(task.note)
         self.assertEqual(task.priority, '2')
         self.assertEqual(task.starred, '0')
@@ -270,7 +276,7 @@ class TestCliGeneratesCorrectTwoDoTaskObject(unittest.TestCase):
         self.assertEqual(task.task, 'TestTask')
         self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
         self.assertIsNone(task.for_list)
-        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.forParentName)
         self.assertIsNone(task.note)
         self.assertEqual(task.priority, '0')
         self.assertEqual(task.starred, '0')
@@ -290,7 +296,7 @@ class TestCliGeneratesCorrectTwoDoTaskObject(unittest.TestCase):
         self.assertEqual(task.task, 'TestTask')
         self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
         self.assertIsNone(task.for_list)
-        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.forParentName)
         self.assertIsNone(task.note)
         self.assertEqual(task.priority, '0')
         self.assertEqual(task.starred, '0')

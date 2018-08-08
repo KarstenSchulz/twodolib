@@ -47,7 +47,7 @@ class TestTwoDoTaskClass(unittest.TestCase):
         self.assertEqual(task.task, 'Save the world.')
         self.assertEqual(task.type, TwoDoTask.TASK_TYPE)
         self.assertIsNone(task.for_list)
-        self.assertIsNone(task.forParentTask)
+        self.assertIsNone(task.forParentName)
         self.assertIsNone(task.note)
         self.assertEqual(task.priority, '0')
         self.assertEqual(task.starred, '0')

@@ -79,6 +79,12 @@ def parse_arguments(args):
     p.add_argument('-e', '--execute', action='store_true',
                    help='Actually add the task instead of only '
                         'printing the URL to stdout.')
+    p.add_argument('-f', '--forParentName', metavar='FOR_PARENTNAME',
+                   dest='for_parent_name',
+                   help='Title of an existing project or checklist to save the '
+                        'new task there as a subtask. Also requires the '
+                        'parent\'s task list.',
+                   default=None)
     p.add_argument('-i', '--ignoreDefaults', action='store_true',
                    default=False,
                    help='Ignore default date / time settings of 2DoApp.')
@@ -118,9 +124,8 @@ def parse_arguments(args):
     return p.parse_args(args)
 
 
-def main(arguments=None):
+def main(arguments=None):  # use arguments to allow testing.
     """Create a task in 2DoApp."""
-    # FIXME: correct usage of arguments and sys.argv??
     if arguments is None:
         arguments = sys.argv[1:]
     args = parse_arguments(arguments)
