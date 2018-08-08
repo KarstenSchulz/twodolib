@@ -6,9 +6,6 @@ twodolib - A commandline helper to add tasks to 2DoApp
 .. image:: https://img.shields.io/github/release/KarstenSchulz/twodolib.svg
     :target: https://github.com/KarstenSchulz/twodolib/releases
 
-.. image:: https://img.shields.io/travis/KarstenSchulz/twodolib.svg
-    :target: https://travis-ci.org/KarstenSchulz/twodolib
-
 .. image:: https://img.shields.io/coveralls/KarstenSchulz/twodolib.svg
     :target: https://coveralls.io/github/KarstenSchulz/twodolib?branch=master
 
