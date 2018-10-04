@@ -3,8 +3,8 @@
 History
 -------
 
-0.5.0
------
+0.5.0 (2018-08-08)
+------------------
 
 * dropping Python 2.7 support
 * implemented ``forParentName``
