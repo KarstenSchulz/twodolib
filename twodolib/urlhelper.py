@@ -28,7 +28,7 @@ def pbpaste():
 
 
 # noinspection PyPep8Naming,PyAttributeOutsideInit
-class TwoDoTask(object):
+class TwoDoTask:
     """Represents all attributes of a task in the 2DoApp."""
 
     ADD_URL = 'twodo://x-callback-url/add?{}'
