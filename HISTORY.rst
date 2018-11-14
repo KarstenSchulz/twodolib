@@ -3,6 +3,14 @@
 History
 -------
 
+0.5.1 (2018-11-14)
+------------------
+
+Please update, because package requests was updated for security reasons!
+
+* updated requirements
+
+
 0.5.0 (2018-08-08)
 ------------------
 
