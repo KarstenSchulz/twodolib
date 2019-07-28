@@ -3,6 +3,16 @@
 History
 =======
 
+0.5.4 (2019-07-28)
+------------------
+
+updated HISTORY.txt file (gosh!)
+
+0.5.3 (2019-07-28)
+------------------
+
+removes unnecessary dependencies.
+
 0.5.2 (2019-07-15)
 ------------------
 
