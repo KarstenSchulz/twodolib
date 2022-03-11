@@ -46,7 +46,7 @@ ACTION_HELP_TEXT = """action: Supports the following formats:
 call:<number> - Add a Call action to call the specified number
 message:<number> - Add a Message action to send a message to the specified 
                    number
-mail:<email> - Add a Email action to send an email the specified email address
+mail:<email> - Add an Email action to send an email the specified email address
 url:<url to visit> - Add a Browse action to visit the specified URL address
 visit:<address> - Add a Visit action to visit the specified location
 google:<search term> - Add a Google action to search the specified keyword
